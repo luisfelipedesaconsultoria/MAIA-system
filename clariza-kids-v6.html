@@ -1,0 +1,1778 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: blob:; connect-src *;">
+<title>Clariza Kids</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23F06E8C'/%3E%3Ctext x='50' y='62' font-family='Arial' font-size='44' font-weight='900' fill='white' text-anchor='middle'%3ECK%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23F06E8C'/%3E%3Ctext x='50' y='62' font-family='Arial' font-size='44' font-weight='900' fill='white' text-anchor='middle'%3ECK%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--pk:#F06E8C;--tl:#2BBFB3;--pu:#C084FC;--gn:#10B981;--gnb:#D1FAE5;--am:#F59E0B;--amb:#FEF3C7;--rd:#EF4444;--rdb:#FEE2E2;--sk:#38BDF8;--skb:#E0F2FE;--in:#6366F1;--bg:#080810;--s1:#0F0F18;--s2:#181824;--s3:#22223A;--bd:#2E2E48;--mu:#6B6B90;--tx:#EEEEF8;--t2:#AAAAC0;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:"Inter",sans-serif;background:#000;color:var(--tx);height:100dvh;display:flex;flex-direction:column;position:fixed;width:100%;overscroll-behavior:none;}
+input,select,textarea{font-size:16px!important;-webkit-appearance:none;}
+#app{flex:1;min-height:0;position:relative;overflow:hidden;background:var(--bg);}
+.scr{position:absolute;inset:0;display:none;flex-direction:column;background:var(--bg);overflow:hidden;}
+.scr.on{display:flex;}
+@keyframes sIn{from{transform:translateX(6%);opacity:0}to{transform:translateX(0);opacity:1}}
+.sIn{animation:sIn .18s ease forwards;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes pulse{0%,100%{opacity:.2;transform:scaleX(.3)}50%{opacity:1;transform:scaleX(1)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes tin{from{transform:translateY(6px);opacity:0}to{transform:translateY(0);opacity:1}}
+.tb{height:50px;flex-shrink:0;display:flex;align-items:center;gap:8px;padding:0 12px;background:var(--s1);border-bottom:1px solid var(--bd);}
+.tb-logo{display:flex;align-items:center;margin-right:auto;}
+.back,.home-btn{width:36px;height:36px;border-radius:9px;background:var(--s2);border:none;color:var(--tx);font-size:17px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;}
+.ava{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--pk),var(--tl));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;flex-shrink:0;}
+.sb{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;}
+.bnav{flex-shrink:0;display:flex;background:var(--s1);border-top:1px solid var(--bd);padding-bottom:env(safe-area-inset-bottom,0px);}
+.bni{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:8px 0;border:none;background:none;color:var(--mu);cursor:pointer;-webkit-user-select:none;}
+.bni.on{color:var(--pk);}
+.bni-i{font-size:17px;line-height:1;}.bni-l{font-size:8px;font-weight:600;}
+.ov{display:none;position:absolute;inset:0;z-index:200;background:rgba(0,0,0,.84);backdrop-filter:blur(6px);align-items:flex-end;justify-content:center;}
+.ov.on{display:flex;}
+.ob{background:var(--s2);border:1px solid var(--bd);border-radius:22px 22px 0 0;padding:18px 18px calc(18px + env(safe-area-inset-bottom,0px));width:100%;max-width:480px;max-height:90vh;overflow-y:auto;}
+.oh{width:34px;height:4px;border-radius:2px;background:var(--bd);margin:0 auto 14px;}
+.ot{font-size:15px;font-weight:800;margin-bottom:12px;}
+.toast{position:absolute;bottom:20px;left:14px;right:14px;z-index:9999;padding:13px 16px;border-radius:13px;font-size:13px;font-weight:700;text-align:center;display:none;pointer-events:none;}
+.toast.on{display:block;animation:tin .2s ease;}
+.tok{background:var(--gn);color:#fff;}.ter{background:var(--rd);color:#fff;}.twa{background:var(--am);color:#000;}
+.card{background:var(--s2);border:1px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:10px;}
+.row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--bd);}
+.row:last-child{border-bottom:none;}
+.rl{font-size:12px;color:var(--mu);}.rv{font-size:13px;font-weight:700;}
+.badge{padding:4px 9px;border-radius:7px;font-size:10px;font-weight:700;}
+.bok{background:var(--gnb);color:var(--gn);}.bwarn{background:var(--amb);color:var(--am);}
+.berr{background:var(--rdb);color:var(--rd);}.bsky{background:var(--skb);color:var(--sk);}
+.field{margin-bottom:11px;}
+.field label{display:block;font-size:10px;color:var(--mu);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:4px;}
+.field input,.field select,.field textarea{width:100%;padding:12px 14px;background:var(--s1);border:1.5px solid var(--bd);border-radius:11px;color:var(--tx);outline:none;}
+.field input:focus,.field select:focus{border-color:var(--pk);}
+.field select option{background:var(--s2);}
+.bp{width:100%;padding:14px;border-radius:13px;border:none;background:linear-gradient(135deg,var(--pk),var(--tl));color:#fff;font-size:15px;font-weight:800;cursor:pointer;min-height:50px;}
+.bp:active,.bp:disabled{opacity:.7;}
+.bs2{width:100%;padding:12px;border-radius:12px;border:none;background:var(--s3);color:var(--tx);font-size:14px;font-weight:700;cursor:pointer;min-height:46px;margin-top:8px;}
+.bgn{width:100%;padding:13px;border-radius:13px;border:none;background:linear-gradient(135deg,var(--gn),#059669);color:#fff;font-size:14px;font-weight:800;cursor:pointer;min-height:48px;}
+.brd{width:100%;padding:13px;border-radius:13px;border:none;background:var(--rd);color:#fff;font-size:14px;font-weight:800;cursor:pointer;min-height:48px;}
+.bcn{width:100%;padding:11px;border-radius:12px;background:none;border:none;color:var(--mu);font-size:13px;font-weight:600;cursor:pointer;min-height:42px;margin-top:4px;}
+.ks{display:flex;gap:8px;padding:0 14px 12px;overflow-x:auto;}.ks::-webkit-scrollbar{display:none;}
+.kc{background:var(--s2);border:1px solid var(--bd);border-radius:14px;padding:12px;min-width:128px;flex-shrink:0;position:relative;overflow:hidden;}
+.kc::after{content:"";position:absolute;top:0;left:0;right:0;height:3px;}
+.kg::after{background:var(--gn);}.kp::after{background:var(--pk);}.ka::after{background:var(--am);}.ksk::after{background:var(--sk);}.kin::after{background:var(--in);}
+.kl{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--mu);font-weight:700;margin-bottom:5px;}
+.kv{font-size:20px;font-weight:900;letter-spacing:-.5px;}.ksb{font-size:10px;color:var(--mu);margin-top:4px;}
+.lgw{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:22px;overflow-y:auto;background:radial-gradient(ellipse at top,#1a0a20,var(--bg));}
+.lgc{background:var(--s2);border:1px solid var(--bd);border-radius:20px;padding:22px;width:100%;max-width:340px;}
+.phb{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;padding:14px;display:flex;flex-direction:column;gap:10px;padding-bottom:calc(80px + env(safe-area-inset-bottom,0px));}
+.big2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.bigbtn{border:none;border-radius:16px;cursor:pointer;padding:18px 10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:120px;-webkit-user-select:none;}
+.bigbtn:active{opacity:.86;}
+.bsell{background:linear-gradient(155deg,var(--pk),var(--pu));box-shadow:0 4px 18px rgba(240,110,140,.3);}
+.bstk{background:linear-gradient(155deg,var(--tl),#0891B2);}
+.bhist{background:linear-gradient(155deg,var(--am),#D97706);}
+.btok{background:linear-gradient(155deg,#6366F1,#8B5CF6);}
+.blive{background:linear-gradient(155deg,var(--sk),#0284C7);}
+.boff{background:linear-gradient(155deg,#374151,#1F2937);}
+.bnotas{background:linear-gradient(155deg,var(--gn),#059669);}
+.bprod{background:linear-gradient(155deg,var(--am),#D97706);}
+.bi{font-size:30px;line-height:1;}.bl{font-size:14px;font-weight:900;color:#fff;}.bsm{font-size:10px;color:rgba(255,255,255,.7);}
+.s3g{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;}
+.spill{background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:10px 6px;text-align:center;}
+.spv{font-size:15px;font-weight:800;}.spl{font-size:9px;color:var(--mu);font-weight:700;text-transform:uppercase;margin-top:2px;}
+.ac{border-radius:12px;padding:10px 13px;display:flex;align-items:center;gap:9px;}
+.ac.warn{background:#F59E0B10;border:1px solid #F59E0B30;}.ac.ok{background:#10B98110;border:1px solid #10B98130;}
+.ac.err{background:#EF444410;border:1px solid #EF444430;}.ac.info{background:#6366F110;border:1px solid #6366F130;}
+.aci{font-size:18px;flex-shrink:0;}.act{font-size:12px;font-weight:700;}.acs{font-size:11px;color:var(--mu);margin-top:1px;}
+.fab-home{position:fixed;bottom:calc(68px + env(safe-area-inset-bottom,0px));right:16px;z-index:100;width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--pk),var(--tl));border:none;cursor:pointer;box-shadow:0 4px 16px rgba(240,110,140,.4);display:none;align-items:center;justify-content:center;font-size:20px;}
+/* BARRA INFERIOR FLUTUANTE para telas internas */
+.bbar{position:fixed;bottom:0;left:0;right:0;z-index:99;background:var(--s1);border-top:1px solid var(--bd);padding:8px 14px calc(8px + env(safe-area-inset-bottom,0px));display:none;gap:8px;}
+.bbar.on{display:flex;}
+.bbar-btn{flex:1;padding:13px 10px;border-radius:12px;border:none;font-size:13px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;min-height:50px;}
+.bbar-back{background:var(--s2);color:var(--tx);}
+.bbar-home{background:linear-gradient(135deg,var(--pk),var(--tl));color:#fff;}
+.bbar-action{background:linear-gradient(135deg,var(--tl),#0891B2);color:#fff;}
+.sinp{width:100%;padding:13px 14px;background:var(--s1);border:1.5px solid var(--bd);border-radius:11px;color:var(--tx);outline:none;margin-bottom:8px;}
+.sinp.lit{border-color:var(--tl);}
+.scan-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.bcam{padding:13px;border-radius:11px;border:none;background:var(--tl);color:#fff;font-size:13px;font-weight:800;cursor:pointer;min-height:48px;display:flex;align-items:center;justify-content:center;gap:6px;}
+.bia{padding:13px;border-radius:11px;border:none;background:var(--sk);color:#000;font-size:13px;font-weight:800;cursor:pointer;min-height:48px;display:flex;align-items:center;justify-content:center;gap:6px;}
+.spulse{height:2px;margin-top:6px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--tl),transparent);animation:pulse 2s ease-in-out infinite;}
+.catscroll{display:flex;gap:6px;padding:10px 14px;overflow-x:auto;}.catscroll::-webkit-scrollbar{display:none;}
+.cchip{display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 11px;border-radius:12px;flex-shrink:0;background:var(--s2);border:1.5px solid var(--bd);cursor:pointer;min-width:56px;-webkit-user-select:none;}
+.cchip:active{border-color:var(--pk);}
+.avbtn{display:flex;align-items:center;gap:11px;margin:0 14px;padding:13px 15px;background:var(--s2);border:2px dashed var(--am);border-radius:14px;cursor:pointer;min-height:54px;width:calc(100% - 28px);}
+.prodcard{margin:0 14px;background:var(--s2);border:1.5px solid var(--tl);border-radius:14px;padding:13px;display:none;}
+.prodcard.on{display:block;animation:fadeUp .2s ease;}
+.pmini{padding:8px 4px;border-radius:9px;border:1.5px solid var(--bd);background:var(--s3);color:var(--t2);font-size:10px;font-weight:700;cursor:pointer;text-align:center;-webkit-user-select:none;}
+.pmini.on{border-color:var(--pk);background:#F06E8C10;color:var(--pk);}
+.qbtn{width:46px;height:46px;border-radius:10px;background:var(--s3);border:none;color:var(--tx);font-size:22px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.qbtn:active{background:var(--pk);}
+.addbt{flex:1;height:46px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--tl),#0891B2);color:#fff;font-size:13px;font-weight:800;cursor:pointer;}
+.ci-del{width:30px;height:30px;border-radius:8px;background:var(--rdb);border:none;color:var(--rd);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.avb,.tkb,.pxb{font-size:9px;font-weight:700;padding:2px 5px;border-radius:4px;display:inline-block;}
+.avb{background:var(--amb);color:var(--am);}.tkb{background:#6366F120;color:#818CF8;}.pxb{background:var(--skb);color:var(--sk);}
+.stbar{flex-shrink:0;padding:9px 14px calc(9px + env(safe-area-inset-bottom,0px));background:var(--s1);border-top:1px solid var(--bd);}
+.ocart{width:100%;padding:14px 18px;border-radius:13px;border:none;background:linear-gradient(135deg,var(--pk),var(--tl));color:#fff;font-size:14px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:space-between;min-height:50px;}
+.ecat{padding:6px 12px;border-radius:18px;font-size:11px;font-weight:700;border:1.5px solid var(--bd);background:var(--s2);color:var(--mu);cursor:pointer;flex-shrink:0;white-space:nowrap;-webkit-user-select:none;}
+.ecat.on{background:var(--tl);border-color:var(--tl);color:#fff;}
+.eitem{background:var(--s2);border:1px solid var(--bd);border-radius:13px;padding:13px;display:flex;align-items:center;gap:11px;cursor:pointer;}
+.eitem:active{border-color:var(--tl);}
+.eic{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,#F06E8C12,#2BBFB312);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.qok{color:var(--gn);}.qlo{color:var(--am);}.qze{color:var(--rd);}
+.fab-add{position:absolute;bottom:14px;right:14px;width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--tl),#0891B2);border:none;color:#fff;font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(43,191,179,.4);}
+.htab{flex:1;padding:9px;text-align:center;font-size:12px;font-weight:700;color:var(--mu);border-bottom:2px solid var(--bd);cursor:pointer;-webkit-user-select:none;}
+.htab.on{color:var(--pk);border-bottom-color:var(--pk);}
+.tokh{margin:14px;background:linear-gradient(135deg,#1a0040,#0d0028);border:1px solid #4C1D95;border-radius:18px;padding:20px;text-align:center;}
+.tokcode{font-size:48px;font-weight:900;letter-spacing:12px;color:#C4B5FD;margin:14px 0;font-family:monospace;}
+.ppin{height:58px;border-radius:13px;background:var(--s2);border:1.5px solid var(--bd);color:var(--tx);font-size:21px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-user-select:none;}
+.ppin:active{background:var(--s3);}
+.pdot{width:16px;height:16px;border-radius:50%;border:2px solid var(--bd);}.pdot.f{background:var(--pu);border-color:var(--pu);}
+.ldot{width:6px;height:6px;border-radius:50%;background:var(--gn);animation:blink 1.5s infinite;flex-shrink:0;}
+.admbody{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;}
+.atab{display:none;}.atab.on{display:block;}
+.pctinp{width:68px;padding:6px 10px;background:var(--s1);border:1.5px solid var(--bd);border-radius:8px;color:var(--tx);font-size:16px;font-weight:700;outline:none;text-align:right;}
+.fperf-card{background:var(--s2);border:1px solid var(--bd);border-radius:14px;overflow:hidden;margin-bottom:8px;}
+.fperf-hd{display:flex;align-items:center;gap:11px;padding:13px;cursor:pointer;}
+.fperf-body{padding:12px;border-top:1px solid var(--bd);display:none;}.fperf-body.on{display:block;}
+.maia-card{margin:0 14px 10px;background:linear-gradient(135deg,#0a0a1a,#1a0a2e);border:1px solid #3730A3;border-radius:16px;padding:16px;}
+.maia-hd{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.maia-av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--pk),var(--tl));display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:#fff;flex-shrink:0;}
+.maia-msg{font-size:12px;color:#C7D2FE;line-height:1.6;margin-bottom:10px;}
+.maia-insight{background:rgba(255,255,255,.06);border-radius:10px;padding:10px 12px;margin-bottom:6px;font-size:11px;color:#E0E7FF;line-height:1.5;}
+.maia-insight.alert{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.2);}
+.maia-insight.ok{background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.2);}
+.maia-insight.warn{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.2);}
+.dre-card{margin:0 14px 10px;background:var(--s2);border:1px solid var(--bd);border-radius:14px;overflow:hidden;}
+.dre-hd{padding:12px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;}
+.dre-row{display:flex;justify-content:space-between;align-items:center;padding:7px 14px;}
+.dre-row.total{background:var(--s3);padding:9px 14px;}.dre-row.sub{padding:6px 14px 6px 22px;}
+.dre-l{font-size:12px;color:var(--mu);}.dre-l.bold{color:var(--tx);font-weight:700;}
+.dre-v{font-size:12px;font-weight:700;}.dre-v.pos{color:var(--gn);}.dre-v.neg{color:var(--rd);}.dre-v.big{font-size:15px;font-weight:900;}
+.ri{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:10px;margin-bottom:6px;}
+.ri.ok{background:#10B98110;border:1px solid #10B98130;}.ri.warn{background:#F59E0B10;border:1px solid #F59E0B30;}
+.ri.dang{background:#EF444410;border:1px solid #EF444430;}.ri.info{background:#6366F110;border:1px solid #6366F130;}
+.ri-ic{font-size:17px;flex-shrink:0;}.ri-ttl{font-size:11px;font-weight:700;}.ri-sub{font-size:10px;color:var(--mu);margin-top:1px;}
+.abc-tab{flex:1;padding:8px;text-align:center;font-size:11px;font-weight:700;color:var(--mu);border-bottom:2px solid var(--bd);cursor:pointer;-webkit-user-select:none;}
+.abc-tab.on{color:var(--pk);border-bottom-color:var(--pk);}
+.prod-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--bd);}
+.prod-row:last-child{border-bottom:none;}
+.prod-bar-bg{height:4px;background:var(--s3);border-radius:2px;overflow:hidden;margin-top:4px;}
+.prod-bar{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--pk),var(--tl));}
+.nota-item{background:var(--s2);border:1px solid var(--bd);border-radius:14px;padding:13px;margin-bottom:8px;}
+.nota-tag{font-size:9px;font-weight:700;padding:3px 8px;border-radius:12px;}
+.fal{border-radius:12px;padding:11px 13px;display:flex;gap:9px;align-items:flex-start;}
+.fal.ok{background:#10B98110;border:1px solid #10B98130;}.fal.warn{background:#F59E0B10;border:1px solid #F59E0B30;}
+.fal.info{background:#38BDF810;border:1px solid #38BDF830;}
+.offbtn{padding:14px 8px;border-radius:12px;background:var(--s2);border:1px solid var(--bd);display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;}
+.sdot{flex:1;height:4px;border-radius:2px;background:var(--bd);}.sdot.done{background:var(--pk);}
+.dup{background:var(--s3);border:2px dashed var(--bd);border-radius:12px;padding:16px;text-align:center;cursor:pointer;margin-bottom:8px;}
+/* Barcode */
+.bc-wrap{background:#fff;border-radius:10px;padding:14px;text-align:center;margin-bottom:10px;}
+/* Scanner overlay */
+.scan-ovl{position:absolute;inset:0;z-index:300;background:#000;display:none;flex-direction:column;}
+.scan-ovl.on{display:flex;}
+.scan-view{flex:1;position:relative;overflow:hidden;}
+#scan-video{width:100%;height:100%;object-fit:cover;}
+.scan-frame{position:absolute;top:50%;left:50%;transform:translate(-50%,-55%);width:220px;height:140px;border:3px solid var(--tl);border-radius:14px;box-shadow:0 0 0 9999px rgba(0,0,0,.6);}
+.scan-line{position:absolute;top:0;left:0;right:0;height:2px;background:var(--tl);animation:scanln 2s ease-in-out infinite;}
+@keyframes scanln{0%,100%{top:0}50%{top:100%}}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- LOGIN -->
+<div id="s-login" class="scr on">
+  <div class="lgw">
+    <div style="display:flex;justify-content:center;margin-bottom:20px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 130" width="200" height="93"><text x="8" y="65" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="64" font-weight="900" fill="#F06E8C">Clariza</text><text x="148" y="118" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="56" font-weight="900" fill="#2BBFB3">Kids</text><text x="160" y="42" font-size="20" fill="#F06E8C">&#x2665;</text><circle cx="46" cy="93" r="5" fill="#9B59B6"/><circle cx="62" cy="102" r="5" fill="#2BBFB3"/><path d="M46 97 Q54 108 62 97" stroke="#F5A623" stroke-width="4" fill="none" stroke-linecap="round"/></svg></div>
+    <div class="lgc">
+      <div class="field"><label>Email</label><input type="email" id="lgu" placeholder="seu@email.com" autocomplete="email" autocorrect="off" autocapitalize="none"></div>
+      <div class="field"><label>Senha</label><input type="password" id="lgp" placeholder="Sua senha" autocomplete="current-password"></div>
+      <button class="bp" id="btn-login" onclick="doLogin()">Entrar</button>
+    </div>
+    <div style="font-size:11px;color:var(--mu);margin-top:14px;text-align:center">Clariza Kids &copy; 2026</div>
+  </div>
+</div>
+
+<!-- PDV HOME VENDEDORA -->
+<div id="s-pdv-home" class="scr">
+  <div class="tb"><div class="tb-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 44" width="90" height="22"><text x="2" y="32" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="34" font-weight="900" fill="#F06E8C">Clariza</text><text x="100" y="42" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="26" font-weight="900" fill="#2BBFB3">Kids</text><text x="110" y="16" font-size="12" fill="#F06E8C">&#x2665;</text></svg></div><div class="ava" id="pdv-av">J</div></div>
+  <div class="phb">
+    <div><div style="font-size:18px;font-weight:800" id="pdv-greet">Ola!</div><div style="font-size:12px;color:var(--mu);margin-top:2px" id="pdv-sub"></div></div>
+    <div class="big2">
+      <button class="bigbtn bsell" onclick="go('s-vender')"><div class="bi">&#x1F6D2;</div><div class="bl">VENDER</div><div class="bsm">Registrar venda</div></button>
+      <button class="bigbtn bstk" onclick="go('s-estoque')"><div class="bi">&#x1F4E6;</div><div class="bl">ESTOQUE</div><div class="bsm">Ver produtos</div></button>
+    </div>
+    <button class="bigbtn bhist" style="min-height:54px;border-radius:14px;flex-direction:row;gap:12px;padding:12px 16px;justify-content:flex-start;width:100%" onclick="go('s-minhas-vendas')">
+      <div class="bi" style="font-size:22px">&#x1F4CB;</div>
+      <div><div class="bl" style="font-size:14px">MINHAS VENDAS</div><div class="bsm" id="mv-hoje-btn">Hoje: 0 vendas</div></div>
+    </button>
+    <div class="s3g">
+      <div class="spill"><div class="spv" style="color:var(--tl)" id="cnt-hoje">0</div><div class="spl">Hoje</div></div>
+      <div class="spill"><div class="spv" style="color:var(--sk)" id="cnt-semana">0</div><div class="spl">Semana</div></div>
+      <div class="spill"><div class="spv" style="color:var(--am)" id="cnt-mes">0</div><div class="spl">Mes</div></div>
+    </div>
+    <div class="ac warn" id="alert-estoque" style="display:none"><div class="aci">&#x26A0;&#xFE0F;</div><div><div class="act">Estoque Baixo</div><div class="acs" id="alert-estoque-txt"></div></div></div>
+    <div class="ac ok"><div class="aci">&#x2705;</div><div><div class="act">Sistema online</div><div class="acs">Vendas salvas em tempo real</div></div></div>
+    <button class="bs2" style="margin-top:0" onclick="openOv('ov-fech')">&#x1F4CB; Solicitar Fechamento</button>
+  </div>
+</div>
+
+<!-- PDV HOME DIARISTA -->
+<div id="s-diar-home" class="scr">
+  <div class="tb"><div class="tb-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 44" width="90" height="22"><text x="2" y="32" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="34" font-weight="900" fill="#F06E8C">Clariza</text><text x="100" y="42" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="26" font-weight="900" fill="#2BBFB3">Kids</text><text x="110" y="16" font-size="12" fill="#F06E8C">&#x2665;</text></svg></div><div class="ava" style="background:linear-gradient(135deg,var(--am),#D97706)" id="diar-av">D</div></div>
+  <div class="phb">
+    <div><div style="font-size:18px;font-weight:800" id="diar-greet">Ola!</div><div style="font-size:12px;color:var(--mu);margin-top:2px">Acesso temporario</div></div>
+    <div class="ac warn"><div class="aci">&#x23F0;</div><div><div class="act">Acesso Temporario</div><div class="acs">Token obrigatorio para toda venda</div></div></div>
+    <button class="bigbtn bsell" style="width:100%;min-height:120px" onclick="go('s-vender')"><div class="bi">&#x1F6D2;</div><div class="bl">VENDER</div><div class="bsm">Registrar venda</div></button>
+    <button class="bs2" style="margin-top:0" onclick="openOv('ov-fech')">&#x1F4CB; Solicitar Fechamento</button>
+  </div>
+</div>
+
+<!-- VENDER -->
+<div id="s-vender" class="scr">
+  <div class="tb"><div class="tb-logo" style="margin-left:0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 44" width="90" height="22"><text x="2" y="32" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="34" font-weight="900" fill="#F06E8C">Clariza</text><text x="100" y="42" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="26" font-weight="900" fill="#2BBFB3">Kids</text><text x="110" y="16" font-size="12" fill="#F06E8C">&#x2665;</text></svg></div><div style="flex:1;padding-left:6px;font-size:14px;font-weight:800">Vender</div>
+    <div id="cartind" style="background:var(--pk);color:#fff;padding:4px 10px;border-radius:18px;font-size:11px;font-weight:800;display:none">0</div>
+  </div>
+  <div class="sb" id="vbody">
+    <div style="margin:12px 14px 0">
+      <input class="sinp" id="sinp" type="text" placeholder="Digite codigo ou nome do produto..." autocomplete="off" autocorrect="off">
+      <div class="scan-btns">
+        <button class="bcam" onclick="buscar()">&#x1F50D; Buscar</button>
+        <button class="bia" onclick="abrirScanner('venda')">&#x1F4F7; Escanear</button>
+      </div>
+      <div class="spulse"></div>
+    </div>
+    <div class="catscroll">
+      <div class="cchip" onclick="buscarCat('Vestidos')"><span style="font-size:18px">&#x1F457;</span><span style="font-size:9px;font-weight:600;color:var(--mu)">Vestidos</span></div>
+      <div class="cchip" onclick="buscarCat('Conjuntos')"><span style="font-size:18px">&#x1F455;</span><span style="font-size:9px;font-weight:600;color:var(--mu)">Conjuntos</span></div>
+      <div class="cchip" onclick="buscarCat('Calcados')"><span style="font-size:18px">&#x1F45F;</span><span style="font-size:9px;font-weight:600;color:var(--mu)">Calcados</span></div>
+      <div class="cchip" onclick="buscarCat('Acessorios')"><span style="font-size:18px">&#x1F380;</span><span style="font-size:9px;font-weight:600;color:var(--mu)">Acessorios</span></div>
+      <div class="cchip" onclick="buscarCat('Bebe')"><span style="font-size:18px">&#x1F476;</span><span style="font-size:9px;font-weight:600;color:var(--mu)">Bebe</span></div>
+    </div>
+    <button class="avbtn" onclick="openOv('ov-av')">
+      <span style="font-size:20px">&#x1F3F7;&#xFE0F;</span>
+      <div><div style="font-size:13px;font-weight:800;color:var(--am)">Venda Avulsa</div><div style="font-size:10px;color:var(--mu)">Produto sem cadastro</div></div>
+      <span style="margin-left:auto;font-size:18px;color:var(--am)">&#x203A;</span>
+    </button>
+    <div class="prodcard" id="prodcard">
+      <div style="display:flex;gap:11px;align-items:center;margin-bottom:11px">
+        <div style="width:50px;height:50px;border-radius:11px;background:linear-gradient(135deg,#F06E8C12,#2BBFB312);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0" id="pr-ic">&#x1F457;</div>
+        <div style="flex:1"><div style="font-size:14px;font-weight:700" id="pr-nm">-</div><div style="font-size:10px;color:var(--mu);margin:2px 0" id="pr-sk">-</div><div style="font-size:11px;font-weight:700;color:var(--tl)" id="pr-st">-</div></div>
+        <div style="text-align:right"><div style="font-size:22px;font-weight:900;color:var(--pk)" id="pr-pr">-</div><div style="font-size:11px;color:var(--sk);font-weight:700;display:none" id="pr-pix">-</div></div>
+      </div>
+      <div style="margin-bottom:10px">
+        <div style="font-size:10px;color:var(--mu);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:6px">Pagamento</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:8px" id="pminis">
+          <div class="pmini on" onclick="selPM(this,'cred')">&#x1F4B3; Cred</div>
+          <div class="pmini" onclick="selPM(this,'deb')">&#x1F3E6; Deb</div>
+          <div class="pmini" onclick="selPM(this,'pix')">&#x26A1; Pix</div>
+          <div class="pmini" onclick="selPM(this,'din')">&#x1F4B5; Din</div>
+        </div>
+        <div style="font-size:11px;color:#0369a1;background:var(--skb);border-radius:8px;padding:7px 10px;display:none" id="pnote">Desconto Pix aplicado automaticamente</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:8px">
+          <label style="font-size:11px;color:var(--mu);font-weight:600;white-space:nowrap">Desconto extra R$</label>
+          <input style="flex:1;padding:8px 11px;background:var(--s1);border:1.5px solid var(--bd);border-radius:9px;color:var(--am);font-size:16px;font-weight:700;outline:none;text-align:right" type="number" id="dscinp" placeholder="0" min="0" step="0.5" inputmode="decimal" oninput="chkDisc()">
+        </div>
+        <div style="display:none;flex-direction:row;align-items:center;gap:8px;margin-top:8px;padding:10px 12px;background:var(--s3);border-radius:10px" id="tokrow">
+          <span style="font-size:11px;color:var(--mu);flex:1">&#x1F511; Token da Gerente</span>
+          <input style="width:90px;padding:8px 10px;background:var(--s1);border:1.5px solid var(--bd);border-radius:9px;color:var(--pu);font-size:16px;font-weight:800;outline:none;text-align:center;letter-spacing:4px" type="text" id="tok-inp" maxlength="4" inputmode="numeric" placeholder="0000" onchange="chkToken()">
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:9px">
+        <button class="qbtn" onclick="cq(-1)">&#x2212;</button>
+        <span style="font-size:20px;font-weight:800;min-width:32px;text-align:center" id="qnum">1</span>
+        <button class="qbtn" onclick="cq(1)">+</button>
+        <button class="addbt" onclick="addC()">+ Adicionar</button>
+      </div>
+    </div>
+    <div id="cartsec" style="padding:0 14px;margin-top:11px;display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px">
+        <span style="font-size:13px;font-weight:700">&#x1F6D2; Carrinho</span>
+        <span style="font-size:11px;color:var(--rd);font-weight:600;cursor:pointer;padding:5px" onclick="openOv('ov-clr')">Limpar</span>
+      </div>
+      <div id="cartlist"></div>
+    </div>
+    <div style="height:80px"></div>
+  </div>
+  <div class="stbar" id="stbar" style="display:none">
+    <button class="ocart" onclick="openPay()"><span id="csum">0 itens</span><span id="ctot" style="font-size:20px;font-weight:900">R$ 0,00</span></button>
+  </div>
+</div>
+
+<!-- SUCESSO -->
+<div id="s-success" class="scr">
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 22px;text-align:center">
+    <div style="font-size:60px;margin-bottom:14px;animation:pop .4s cubic-bezier(.175,.885,.32,1.275)">&#x2705;</div>
+    <div style="font-size:22px;font-weight:900;margin-bottom:5px">Venda registrada!</div>
+    <div id="succ-met" style="padding:7px 16px;background:var(--s2);border:1px solid var(--bd);border-radius:18px;font-size:12px;font-weight:700;margin-bottom:10px">Credito</div>
+    <div id="succ-comm" style="font-size:15px;color:var(--gn);font-weight:700;margin-bottom:20px;display:none"></div>
+    <button class="bp" onclick="novaVenda()">+ Nova Venda</button>
+    <button class="bs2" onclick="goHome()">Inicio</button>
+  </div>
+</div>
+
+<!-- ESTOQUE -->
+<div id="s-estoque" class="scr">
+  <div class="tb"><div class="tb-logo" style="margin-left:0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 44" width="90" height="22"><text x="2" y="32" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="34" font-weight="900" fill="#F06E8C">Clariza</text><text x="100" y="42" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="26" font-weight="900" fill="#2BBFB3">Kids</text><text x="110" y="16" font-size="12" fill="#F06E8C">&#x2665;</text></svg></div><div style="flex:1;padding-left:6px;font-size:14px;font-weight:800">Estoque</div></div>
+  <div class="sb" style="position:relative">
+    <div style="padding:10px 14px 0">
+      <div style="position:relative"><span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:16px">&#x1F50D;</span>
+        <input style="width:100%;padding:12px 14px 12px 38px;background:var(--s2);border:1.5px solid var(--bd);border-radius:12px;color:var(--tx);font-size:16px;outline:none" type="text" id="est-search" placeholder="Buscar produto..." oninput="filtrarEstoque()">
+      </div>
+    </div>
+    <div style="display:flex;gap:6px;padding:8px 14px;overflow-x:auto">
+      <div class="ecat on" onclick="filtCat(this,'')">Todos</div>
+      <div class="ecat" onclick="filtCat(this,'Vestidos')">Vestidos</div>
+      <div class="ecat" onclick="filtCat(this,'Conjuntos')">Conjuntos</div>
+      <div class="ecat" onclick="filtCat(this,'Calcados')">Calcados</div>
+      <div class="ecat" onclick="filtCat(this,'Acessorios')">Acessorios</div>
+      <div class="ecat" onclick="filtCat(this,'Bebe')">Bebe</div>
+    </div>
+    <div id="estoque-list" style="padding:0 14px;display:flex;flex-direction:column;gap:6px;margin-top:4px">
+      <div style="text-align:center;padding:30px;color:var(--mu);font-size:13px">&#x1F4E6; Carregando...</div>
+    </div>
+    <div style="height:70px"></div>
+    <button class="fab-add" onclick="openOv('ov-add-prod')">+</button>
+  </div>
+</div>
+
+<!-- MINHAS VENDAS -->
+<div id="s-minhas-vendas" class="scr">
+  <div class="tb"><div class="tb-logo" style="margin-left:0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 44" width="90" height="22"><text x="2" y="32" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="34" font-weight="900" fill="#F06E8C">Clariza</text><text x="100" y="42" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="26" font-weight="900" fill="#2BBFB3">Kids</text><text x="110" y="16" font-size="12" fill="#F06E8C">&#x2665;</text></svg></div><div style="flex:1;padding-left:6px;font-size:14px;font-weight:800">Minhas Vendas</div></div>
+  <div class="sb">
+    <div style="display:flex;padding:0 14px;margin-top:10px">
+      <div class="htab on" onclick="mvTab(this,'hoje')">Hoje</div>
+      <div class="htab" onclick="mvTab(this,'semana')">Semana</div>
+      <div class="htab" onclick="mvTab(this,'mes')">Mes</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 14px">
+      <div class="spill" style="border-radius:12px;padding:12px"><div style="font-size:22px;font-weight:900;color:var(--pk)" id="mv-qtd">0</div><div class="spl">Vendas</div></div>
+      <div class="spill" style="border-radius:12px;padding:12px"><div style="font-size:22px;font-weight:900;color:var(--tl)" id="mv-total">R$0</div><div class="spl">Total</div></div>
+    </div>
+    <div style="margin:0 14px 12px;background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:13px;display:none" id="mv-comm">
+      <div style="font-size:11px;color:var(--mu);margin-bottom:4px">Comissao do periodo</div>
+      <div style="font-size:20px;font-weight:900;color:var(--gn)" id="mv-comm-val">R$ 0,00</div>
+    </div>
+    <div id="mv-list" style="padding:0 14px"><div style="text-align:center;padding:30px;color:var(--mu);font-size:13px">Nenhuma venda ainda</div></div>
+    <div style="height:16px"></div>
+  </div>
+</div>
+
+<!-- GERENTE HOME -->
+<div id="s-ger-home" class="scr">
+  <div class="tb"><div class="tb-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 44" width="90" height="22"><text x="2" y="32" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="34" font-weight="900" fill="#F06E8C">Clariza</text><text x="100" y="42" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="26" font-weight="900" fill="#2BBFB3">Kids</text><text x="110" y="16" font-size="12" fill="#F06E8C">&#x2665;</text></svg></div><div class="ava" id="ger-av" style="background:linear-gradient(135deg,#6366F1,#8B5CF6)">R</div></div>
+  <div class="phb">
+    <div><div style="font-size:18px;font-weight:800" id="ger-greet">Ola, Regiane!</div><div style="font-size:12px;color:var(--mu);margin-top:2px" id="ger-sub">Supervisao ativa</div></div>
+    <div class="big2">
+      <button class="bigbtn bsell" onclick="go('s-vender')"><div class="bi">&#x1F6D2;</div><div class="bl">VENDER</div><div class="bsm">PDV completo</div></button>
+      <button class="bigbtn blive" onclick="go('s-ao-vivo')"><div class="bi">&#x1F4CA;</div><div class="bl">AO VIVO</div><div class="bsm">Vendas em tempo real</div></button>
+    </div>
+    <div class="big2">
+      <button class="bigbtn btok" onclick="go('s-token')"><div class="bi">&#x1F511;</div><div class="bl">TOKEN</div><div class="bsm">Gerar autorizacao</div></button>
+      <button class="bigbtn bnotas" onclick="go('s-notas')"><div class="bi">&#x1F4DD;</div><div class="bl">ANOTACOES</div><div class="bsm">Relatos e sugestoes</div></button>
+    </div>
+    <button class="bigbtn bstk" style="min-height:54px;border-radius:14px;flex-direction:row;gap:12px;padding:12px 16px;justify-content:flex-start;width:100%" onclick="go('s-estoque')">
+      <div class="bi" style="font-size:22px">&#x1F4E6;</div>
+      <div><div class="bl" style="font-size:14px">ESTOQUE</div><div class="bsm">Produtos e quantidades</div></div>
+    </button>
+    <div class="card"><div class="row"><span class="rl">Comissoes hoje</span><span class="rv" style="color:var(--pk)" id="ger-comm">R$ 0,00</span></div><div class="row" style="border-bottom:none"><span class="rl">Token ativo</span><span class="rv" id="ger-tok-status">Nenhum</span></div></div>
+    <button class="bs2" style="margin-top:0" onclick="go('s-minhas-vendas')">&#x1F4CB; Minhas Vendas</button>
+  </div>
+</div>
+
+<!-- TOKEN -->
+<div id="s-token" class="scr">
+  <div class="tb"><div class="tb-logo" style="margin-left:0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 44" width="90" height="22"><text x="2" y="32" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="34" font-weight="900" fill="#F06E8C">Clariza</text><text x="100" y="42" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="26" font-weight="900" fill="#2BBFB3">Kids</text><text x="110" y="16" font-size="12" fill="#F06E8C">&#x2665;</text></svg></div><div style="flex:1;padding-left:6px;font-size:14px;font-weight:800">Gerar Token</div></div>
+  <div class="sb">
+    <div class="tokh">
+      <div style="font-size:17px;font-weight:900;color:#fff;margin-bottom:4px">Token de Autorizacao</div>
+      <div style="font-size:11px;color:#A78BFA">Seu PIN libera desconto unico para a vendedora</div>
+      <div class="tokcode" id="tok-code">----</div>
+      <div style="font-size:13px;color:#A78BFA" id="tok-timer">Digite seu PIN para gerar</div>
+    </div>
+    <div style="height:8px;background:var(--s3);margin:0 14px 14px;border-radius:4px;overflow:hidden"><div style="height:100%;background:linear-gradient(90deg,#6366F1,#C084FC);border-radius:4px;transition:width 1s linear;width:0%" id="tok-prog"></div></div>
+    <div style="padding:0 14px">
+      <div style="font-size:12px;font-weight:700;color:var(--mu);text-align:center;margin-bottom:10px">SEU PIN</div>
+      <div style="display:flex;gap:14px;justify-content:center;margin:14px 0"><div class="pdot" id="pd0"></div><div class="pdot" id="pd1"></div><div class="pdot" id="pd2"></div><div class="pdot" id="pd3"></div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 14px">
+      <button class="ppin" onclick="pinKey('1')">1</button><button class="ppin" onclick="pinKey('2')">2</button><button class="ppin" onclick="pinKey('3')">3</button>
+      <button class="ppin" onclick="pinKey('4')">4</button><button class="ppin" onclick="pinKey('5')">5</button><button class="ppin" onclick="pinKey('6')">6</button>
+      <button class="ppin" onclick="pinKey('7')">7</button><button class="ppin" onclick="pinKey('8')">8</button><button class="ppin" onclick="pinKey('9')">9</button>
+      <button class="ppin" style="background:none;border:none"></button>
+      <button class="ppin" onclick="pinKey('0')">0</button>
+      <button class="ppin" style="background:var(--s3);color:var(--am)" onclick="pinDel()">DEL</button>
+    </div>
+    <div style="padding:14px"><button class="bs2" onclick="clearToken()">Invalidar Token Atual</button></div>
+  </div>
+</div>
+
+<!-- AO VIVO -->
+<div id="s-ao-vivo" class="scr">
+  <div class="tb"><div class="tb-logo" style="margin-left:0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 44" width="90" height="22"><text x="2" y="32" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="34" font-weight="900" fill="#F06E8C">Clariza</text><text x="100" y="42" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="26" font-weight="900" fill="#2BBFB3">Kids</text><text x="110" y="16" font-size="12" fill="#F06E8C">&#x2665;</text></svg></div><div style="flex:1;padding-left:6px;font-size:14px;font-weight:800">Vendas ao Vivo</div><div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gn);font-weight:700"><div class="ldot"></div>Online</div></div>
+  <div class="sb">
+    <div style="padding:12px 14px;background:var(--s2);border-bottom:1px solid var(--bd);display:flex;justify-content:space-between">
+      <div><div style="font-size:11px;color:var(--mu)">Total do dia</div><div style="font-size:22px;font-weight:900;color:var(--pk)" id="live-total">R$ 0,00</div></div>
+      <div style="text-align:right"><div style="font-size:11px;color:var(--mu)">Vendas</div><div style="font-size:22px;font-weight:900;color:var(--tl)" id="live-qtd">0</div></div>
+    </div>
+    <div id="live-feed" style="padding:10px 14px;display:flex;flex-direction:column;gap:8px">
+      <div style="text-align:center;padding:30px;color:var(--mu);font-size:13px">&#x1F7E2; Aguardando vendas em tempo real...</div>
+    </div>
+  </div>
+</div>
+
+<!-- ANOTACOES -->
+<div id="s-notas" class="scr">
+  <div class="tb"><div class="tb-logo" style="margin-left:0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 44" width="90" height="22"><text x="2" y="32" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="34" font-weight="900" fill="#F06E8C">Clariza</text><text x="100" y="42" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="26" font-weight="900" fill="#2BBFB3">Kids</text><text x="110" y="16" font-size="12" fill="#F06E8C">&#x2665;</text></svg></div><div style="flex:1;padding-left:6px;font-size:14px;font-weight:800">Anotacoes</div>
+    <button onclick="openOv('ov-nota-new')" style="padding:7px 13px;border-radius:9px;border:none;background:linear-gradient(135deg,var(--pk),var(--tl));color:#fff;font-size:12px;font-weight:700;cursor:pointer">+ Nova</button>
+  </div>
+  <div class="sb">
+    <div style="display:flex;gap:6px;padding:10px 14px;overflow-x:auto">
+      <div class="ecat on" onclick="filtrarNotas(this,'todos')">Todas</div>
+      <div class="ecat" onclick="filtrarNotas(this,'problema')">Problemas</div>
+      <div class="ecat" onclick="filtrarNotas(this,'sugestao')">Sugestoes</div>
+      <div class="ecat" onclick="filtrarNotas(this,'elogio')">Elogios</div>
+    </div>
+    <div id="notas-list" style="padding:0 14px"><div style="text-align:center;padding:40px;color:var(--mu)"><div style="font-size:36px;margin-bottom:10px">&#x1F4DD;</div><div style="font-size:14px;font-weight:700">Nenhuma anotacao</div></div></div>
+    <div style="height:16px"></div>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div id="s-admin" class="scr">
+  <div class="tb"><div class="tb-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 44" width="90" height="22"><text x="2" y="32" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="34" font-weight="900" fill="#F06E8C">Clariza</text><text x="100" y="42" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="26" font-weight="900" fill="#2BBFB3">Kids</text><text x="110" y="16" font-size="12" fill="#F06E8C">&#x2665;</text></svg></div><span style="font-size:10px;color:var(--mu)">Admin</span><div class="ava" id="adm-av" style="background:linear-gradient(135deg,var(--tl),#059669)">L</div></div>
+  <div class="admbody">
+
+    <!-- DASHBOARD -->
+    <div class="atab on" id="tab-dash">
+      <div style="padding:12px 14px 6px"><div style="font-size:11px;color:var(--mu)" id="dash-data">Carregando...</div><div style="font-size:20px;font-weight:900">Dashboard</div></div>
+      <div class="ks">
+        <div class="kc kg"><div class="kl">Receita hoje</div><div class="kv" id="kpi-receita">R$0</div><div class="ksb" id="kpi-vendas-txt">0 vendas</div></div>
+        <div class="kc kp"><div class="kl">Lucro operacional</div><div class="kv" id="kpi-lucro">R$0</div><div class="ksb" id="kpi-margem">Margem --</div></div>
+        <div class="kc ka"><div class="kl">Dinheiro</div><div class="kv" id="kpi-dinheiro">R$0</div><div class="ksb" id="kpi-dinheiro-pct">0%</div></div>
+        <div class="kc ksk"><div class="kl">Descontos</div><div class="kv" id="kpi-desconto">R$0</div><div class="ksb">hoje</div></div>
+        <div class="kc kin"><div class="kl">Comissoes</div><div class="kv" id="kpi-comissao">R$0</div><div class="ksb">hoje</div></div>
+      </div>
+      <div class="maia-card">
+        <div class="maia-hd"><div class="maia-av">M</div><div><div style="font-size:13px;font-weight:800;color:#fff">MAIA &mdash; Analise do dia</div><div style="font-size:10px;color:#A5B4FC" id="maia-hora">Atualizando...</div></div></div>
+        <div class="maia-msg" id="maia-msg">Carregando analise...</div>
+        <div id="maia-insights"><div class="maia-insight" style="text-align:center;color:#A5B4FC">&#x1F4CA; Os insights aparecem conforme as vendas sao registradas.</div></div>
+      </div>
+      <div class="dre-card">
+        <div class="dre-hd"><div style="font-size:13px;font-weight:700">DRE do Dia</div><span class="badge bok" id="dre-data">Hoje</span></div>
+        <div class="dre-row"><span class="dre-l bold">Receita Bruta</span><span class="dre-v" id="dre-bruta">R$ 0,00</span></div>
+        <div class="dre-row sub"><span class="dre-l">(-) Descontos</span><span class="dre-v neg" id="dre-desc">- R$ 0,00</span></div>
+        <div class="dre-row total"><span class="dre-l bold">= Receita Liquida</span><span class="dre-v" id="dre-liq">R$ 0,00</span></div>
+        <div class="dre-row sub"><span class="dre-l">(-) CMV</span><span class="dre-v neg" id="dre-cmv">- R$ 0,00</span></div>
+        <div class="dre-row total"><span class="dre-l bold">= Lucro Bruto</span><span class="dre-v pos" id="dre-lb">R$ 0,00</span></div>
+        <div class="dre-row sub"><span class="dre-l">(-) Comissoes</span><span class="dre-v neg" id="dre-comm">- R$ 0,00</span></div>
+        <div class="dre-row sub"><span class="dre-l">(-) DAS MEI</span><span class="dre-v neg" id="dre-das">- R$ 0,00</span></div>
+        <div class="dre-row sub"><span class="dre-l">(-) Alimentacao</span><span class="dre-v neg">- R$ 50,00</span></div>
+        <div class="dre-row total"><span class="dre-l bold">= Lucro Operacional</span><span class="dre-v pos big" id="dre-op">R$ 0,00</span></div>
+        <div style="padding:10px 14px;background:#10B98110;border-top:1px solid var(--bd)"><span style="font-size:11px;color:var(--gn);font-weight:700" id="dre-margem">Registre vendas para calcular</span></div>
+      </div>
+      <div style="height:16px"></div>
+    </div>
+
+    <!-- DESPESAS -->
+    <div class="atab" id="tab-desp">
+      <div style="padding:12px 14px 6px;display:flex;align-items:center;justify-content:space-between">
+        <div><div style="font-size:11px;color:var(--mu)">Controle Financeiro</div><div style="font-size:20px;font-weight:900">Despesas</div></div>
+        <button onclick="openOv('ov-add-desp')" style="padding:8px 14px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--pk),var(--tl));color:#fff;font-size:12px;font-weight:700;cursor:pointer">+ Nova</button>
+      </div>
+      <div style="padding:0 14px">
+        <div style="display:flex;gap:6px;margin-bottom:10px;overflow-x:auto">
+          <div class="ecat on" onclick="filtDesp(this,'')">Todas</div>
+          <div class="ecat" onclick="filtDesp(this,'fixa')">Fixas</div>
+          <div class="ecat" onclick="filtDesp(this,'variavel')">Variaveis</div>
+          <div class="ecat" onclick="filtDesp(this,'eventual')">Eventuais</div>
+        </div>
+        <div style="background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:12px;margin-bottom:10px;display:flex;justify-content:space-between">
+          <div><div style="font-size:10px;color:var(--mu)">Total do mes</div><div style="font-size:20px;font-weight:900;color:var(--rd)" id="desp-total-mes">R$ 0,00</div></div>
+          <div style="text-align:right"><div style="font-size:10px;color:var(--mu)">Fixas</div><div style="font-size:14px;font-weight:700;color:var(--am)" id="desp-total-fixas">R$ 0,00</div></div>
+        </div>
+        <div id="desp-list"><div style="text-align:center;padding:30px;color:var(--mu);font-size:13px">Nenhuma despesa registrada</div></div>
+      </div>
+      <div style="height:16px"></div>
+    </div>
+
+    <!-- PRODUTOS -->
+    <div class="atab" id="tab-prod">
+      <div style="padding:12px 14px 6px;display:flex;align-items:center;justify-content:space-between">
+        <div><div style="font-size:11px;color:var(--mu)">Catalogo</div><div style="font-size:20px;font-weight:900">Produtos</div></div>
+        <button onclick="openOv('ov-add-prod')" style="padding:8px 14px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--tl),#0891B2);color:#fff;font-size:12px;font-weight:700;cursor:pointer">+ Produto</button>
+      </div>
+      <div style="padding:0 14px">
+        <div style="position:relative;margin-bottom:8px">
+          <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:16px">&#x1F50D;</span>
+          <input style="width:100%;padding:12px 14px 12px 38px;background:var(--s2);border:1.5px solid var(--bd);border-radius:12px;color:var(--tx);font-size:16px;outline:none" type="text" placeholder="Buscar produto..." oninput="filtrarProdutosAdmin(this.value)">
+        </div>
+        <div style="display:flex;gap:6px;margin-bottom:10px;overflow-x:auto">
+          <div class="abc-tab on" onclick="abcTab(this,'mais')">Mais Vendidos</div>
+          <div class="abc-tab" onclick="abcTab(this,'parados')">Parados</div>
+          <div class="abc-tab" onclick="abcTab(this,'todos')">Todos</div>
+        </div>
+        <div id="prod-admin-list"><div style="text-align:center;padding:30px;color:var(--mu);font-size:13px">Carregando...</div></div>
+      </div>
+      <div style="height:16px"></div>
+    </div>
+
+    <!-- EQUIPE -->
+    <div class="atab" id="tab-equipe">
+      <div style="padding:12px 14px 6px"><div style="font-size:11px;color:var(--mu)">Gestao de Pessoas</div><div style="font-size:20px;font-weight:900">Equipe</div></div>
+      <div style="padding:0 14px">
+        <div style="background:var(--s2);border:1px solid var(--bd);border-radius:14px;overflow:hidden;margin-bottom:10px">
+          <div style="padding:12px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between"><div style="font-size:13px;font-weight:700">Comissoes hoje</div><button onclick="toast('Em breve: exportar','tok')" style="padding:6px 12px;border-radius:8px;border:none;background:var(--pk);color:#fff;font-size:11px;font-weight:700;cursor:pointer">Exportar</button></div>
+          <div id="comm-list"><div style="padding:14px;text-align:center;color:var(--mu);font-size:12px">Carregando...</div></div>
+        </div>
+        <div style="padding:10px 14px;background:var(--s2);border:1px solid var(--bd);border-radius:12px;margin-bottom:10px">
+          <div style="font-size:10px;color:var(--mu);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">CONFIGURAR %</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div><div style="font-size:10px;color:var(--mu);margin-bottom:4px">Vendedora %</div><div style="display:flex;align-items:center;gap:6px"><input class="pctinp" type="number" id="pct-j" value="2" min="0" max="100" step="0.5" onchange="updateComm('j')"><span style="font-size:12px;color:var(--mu)">%</span></div></div>
+            <div><div style="font-size:10px;color:var(--mu);margin-bottom:4px">Gerente %</div><div style="display:flex;align-items:center;gap:6px"><input class="pctinp" type="number" id="pct-g" value="1" min="0" max="100" step="0.5" onchange="updateComm('g')"><span style="font-size:12px;color:var(--mu)">%</span></div></div>
+          </div>
+        </div>
+        <div id="func-list"><div style="text-align:center;padding:20px;color:var(--mu);font-size:12px">Carregando...</div></div>
+        <button onclick="openOv('ov-add-func')" style="width:100%;padding:14px;background:linear-gradient(135deg,var(--pk),var(--tl));border:none;border-radius:14px;color:#fff;font-size:14px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px"><span style="font-size:20px">&#x1F464;</span>+ Adicionar Funcionaria</button>
+      </div>
+      <div style="height:16px"></div>
+    </div>
+
+    <!-- FISCAL -->
+    <div class="atab" id="tab-fiscal">
+      <div style="padding:12px 14px 6px"><div style="font-size:11px;color:var(--mu)">Tributario</div><div style="font-size:20px;font-weight:900">Monitor Fiscal</div></div>
+      <div style="margin:10px 14px;border-radius:16px;padding:16px;background:linear-gradient(135deg,#0F172A,#1E1B4B);border:1px solid #312E81">
+        <div style="font-size:9px;text-transform:uppercase;letter-spacing:2px;color:#818CF8;font-weight:700;margin-bottom:4px">Regime Atual</div>
+        <div style="font-size:21px;font-weight:900;color:#fff">MEI &mdash; Comercio</div>
+        <div style="font-size:11px;color:#A5B4FC;margin-top:2px">DAS mensal: R$ 75,90 &mdash; Vence dia 20</div>
+        <div style="margin-top:10px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:10px;color:#A5B4FC">Faturamento 2026</span><span style="font-size:10px;font-weight:700;color:#fff" id="mei-total">R$ 0 / R$ 81.000</span></div><div style="height:8px;background:#ffffff10;border-radius:4px;overflow:hidden"><div id="mei-bar-fill" style="width:0%;height:100%;border-radius:4px;background:linear-gradient(90deg,var(--gn),var(--am))"></div></div><div style="font-size:10px;color:#A5B4FC;margin-top:6px" id="mei-proj">Registre vendas para calcular</div></div>
+      </div>
+      <div style="padding:0 14px;display:flex;flex-direction:column;gap:6px;margin-bottom:10px">
+        <div class="fal warn"><div style="font-size:17px">&#x26A0;&#xFE0F;</div><div><div style="font-size:11px;font-weight:700">Planejar migracao ME &mdash; Agosto 2026</div><div style="font-size:10px;color:var(--mu);margin-top:2px">Fale com seu contador antes de atingir 80% do limite</div></div></div>
+        <div class="fal info"><div style="font-size:17px">&#x1F9FE;</div><div><div style="font-size:11px;font-weight:700">DASN-SIMEI 2025 &mdash; verifique entrega</div><div style="font-size:10px;color:var(--mu);margin-top:2px">Confirme com contador se foi entregue</div></div></div>
+      </div>
+      <div style="height:16px"></div>
+    </div>
+
+    <!-- CONFIG -->
+    <div class="atab" id="tab-cfg">
+      <div style="padding:12px 14px 6px"><div style="font-size:11px;color:var(--mu)">Sistema</div><div style="font-size:20px;font-weight:900">Configuracoes</div></div>
+      <div style="padding:0 14px;display:flex;flex-direction:column;gap:9px">
+        <div class="card"><div style="font-size:13px;font-weight:700;margin-bottom:10px">&#x1F4B0; Regras de Preco</div>
+          <div class="row"><span class="rl">Desconto Pix (acima R$35)</span><span class="rv" style="color:var(--tl)">-R$5 por peca</span></div>
+          <div class="row" style="border-bottom:none"><span class="rl">Desconto Pix (ate R$30)</span><span class="rv" style="color:var(--tl)">-R$3 por peca</span></div>
+        </div>
+        <div class="card"><div style="font-size:13px;font-weight:700;margin-bottom:10px">&#x1F512; Acesso</div>
+          <div class="row"><span class="rl">Admin (proprietario)</span><span class="rv">Luis Felipe</span></div>
+          <div class="row"><span class="rl">Gerente</span><span class="rv">Regiane</span></div>
+          <div class="row"><span class="rl">PIN Gerente</span><span class="badge bsky">&#x2022;&#x2022;&#x2022;&#x2022;</span></div>
+          <div class="row" style="border-bottom:none"><span class="rl">Token ativo</span><span class="rv" id="cfg-tok">Nenhum</span></div>
+        </div>
+        <div class="card"><div style="font-size:13px;font-weight:700;margin-bottom:10px">Hierarquia</div>
+          <div class="row"><span class="rl">Admin</span><span class="rv">Acesso total</span></div>
+          <div class="row"><span class="rl">Gerente</span><span class="rv">PDV + Token + Supervisao</span></div>
+          <div class="row"><span class="rl">Vendedora</span><span class="rv">PDV + Estoque + Historico</span></div>
+          <div class="row" style="border-bottom:none"><span class="rl">Diarista</span><span class="rv">PDV restrito + expiracao</span></div>
+        </div>
+        <button class="brd" onclick="fazerLogout()">Sair da conta</button>
+      </div>
+      <div style="height:16px"></div>
+    </div>
+
+  </div>
+  <div class="bnav">
+    <button class="bni on" id="bn-dash" onclick="swTab('dash')"><span class="bni-i">&#x1F916;</span><span class="bni-l">MAIA</span></button>
+    <button class="bni" id="bn-desp" onclick="swTab('desp')"><span class="bni-i">&#x1F4B8;</span><span class="bni-l">Despesas</span></button>
+    <button class="bni" id="bn-prod" onclick="swTab('prod')"><span class="bni-i">&#x1F4E6;</span><span class="bni-l">Produtos</span></button>
+    <button class="bni" id="bn-equipe" onclick="swTab('equipe')"><span class="bni-i">&#x1F465;</span><span class="bni-l">Equipe</span></button>
+    <button class="bni" id="bn-fiscal" onclick="swTab('fiscal')"><span class="bni-i">&#x1F9FE;</span><span class="bni-l">Fiscal</span></button>
+    <button class="bni" id="bn-cfg" onclick="swTab('cfg')"><span class="bni-i">&#x2699;&#xFE0F;</span><span class="bni-l">Config</span></button>
+  </div>
+</div>
+
+
+<!-- MODAIS -->
+<div class="ov" id="ov-pay">
+  <div class="ob"><div class="oh"></div><div class="ot">Finalizar Pagamento</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;background:var(--s1);border-radius:11px;padding:11px 13px;margin-bottom:11px"><span style="font-size:12px;color:var(--mu);font-weight:600">Total</span><span style="font-size:22px;font-weight:900;color:var(--pk)" id="pay-total">R$ 0,00</span></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:11px">
+      <div class="pmini on" onclick="payMet(this,'cred')" style="padding:14px;font-size:12px;min-height:54px;border-radius:12px">&#x1F4B3; Credito</div>
+      <div class="pmini" onclick="payMet(this,'deb')" style="padding:14px;font-size:12px;min-height:54px;border-radius:12px">&#x1F3E6; Debito</div>
+      <div class="pmini" onclick="payMet(this,'pix')" style="padding:14px;font-size:12px;min-height:54px;border-radius:12px">&#x26A1; Pix</div>
+      <div class="pmini" onclick="payMet(this,'din')" style="padding:14px;font-size:12px;min-height:54px;border-radius:12px">&#x1F4B5; Dinheiro</div>
+    </div>
+    <button class="bp" onclick="confVenda()">Cobrar e Finalizar</button>
+    <button class="bcn" onclick="closeOv('ov-pay')">Cancelar</button>
+  </div>
+</div>
+
+<div class="ov" id="ov-clr">
+  <div class="ob" style="text-align:center"><div class="oh"></div><div style="font-size:36px;margin-bottom:10px">&#x1F5D1;&#xFE0F;</div><div class="ot">Limpar carrinho?</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px"><button class="bs2" style="margin-top:0" onclick="closeOv('ov-clr')">Cancelar</button><button class="brd" onclick="doClear()">Limpar</button></div>
+  </div>
+</div>
+
+<div class="ov" id="ov-est">
+  <div class="ob"><div class="oh"></div><div style="font-size:36px;text-align:center;margin-bottom:6px" id="est-ic">&#x1F457;</div>
+    <div style="font-size:16px;font-weight:800;text-align:center" id="est-nm">-</div>
+    <div style="font-size:10px;color:var(--mu);text-align:center;margin:3px 0 14px" id="est-sk">-</div>
+    <div class="row"><span class="rl">Estoque atual</span><span class="rv" id="est-qt">-</span></div>
+    <div class="row"><span class="rl">Custo</span><span class="rv" id="est-cu">-</span></div>
+    <div class="row"><span class="rl">Preco Credito</span><span class="rv" id="est-pr">-</span></div>
+    <div class="row"><span class="rl">Preco Pix</span><span class="rv" style="color:var(--sk)" id="est-px">-</span></div>
+    <div class="row"><span class="rl">Categoria ABC</span><span class="rv" id="est-abc">-</span></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px">
+      <button class="bgn" style="padding:12px" onclick="editarProduto()">&#x270F;&#xFE0F; Editar</button>
+      <button style="padding:12px;border-radius:13px;border:none;background:var(--rdb);color:var(--rd);font-size:14px;font-weight:800;cursor:pointer" onclick="confirmarExcluirProd()">&#x1F5D1;&#xFE0F; Excluir</button>
+    </div>
+    <button class="bs2" onclick="gerarBarcode()">&#x1F4CB; Gerar Codigo de Barras</button>
+    <button class="bcn" onclick="closeOv('ov-est')">Fechar</button>
+  </div>
+</div>
+
+<!-- ADD PRODUTO -->
+<div class="ov" id="ov-add-prod">
+  <div class="ob"><div class="oh"></div><div class="ot" id="add-prod-ttl">&#x1F4E6; Novo Produto</div>
+    <div style="display:grid;grid-template-columns:1fr auto;gap:8px;margin-bottom:11px">
+      <div class="field" style="margin-bottom:0"><label>Codigo de Barras</label><input type="text" id="ap-cod" placeholder="Ex: 7891234567890" autocomplete="off"></div>
+      <div style="padding-top:18px"><button onclick="abrirScanner('produto')" style="padding:12px;border-radius:11px;border:none;background:var(--tl);color:#fff;font-size:18px;cursor:pointer;min-height:48px">&#x1F4F7;</button></div>
+    </div>
+    <div class="field"><label>Nome do Produto</label><input type="text" id="ap-nome" placeholder="Ex: Vestido Floral Rosa"></div>
+    <div class="field"><label>Categoria</label>
+      <select id="ap-cat"><option>Vestidos</option><option>Conjuntos</option><option>Calcados</option><option>Acessorios</option><option>Bebe</option><option>Outros</option></select>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <div class="field"><label>Preco de Venda (R$)</label><input type="number" id="ap-preco" placeholder="0,00" min="0" step="0.01" inputmode="decimal"></div>
+      <div class="field"><label>Custo (R$)</label><input type="number" id="ap-custo" placeholder="0,00" min="0" step="0.01" inputmode="decimal"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <div class="field"><label>Estoque Atual</label><input type="number" id="ap-estoque" placeholder="0" min="0" inputmode="numeric"></div>
+      <div class="field"><label>Estoque Minimo</label><input type="number" id="ap-minimo" placeholder="3" min="0" inputmode="numeric" value="3"></div>
+    </div>
+    <div class="field"><label>Classificacao ABC</label>
+      <select id="ap-abc"><option value="A">A - Alta rotatividade</option><option value="B" selected>B - Media rotatividade</option><option value="C">C - Baixa rotatividade</option></select>
+    </div>
+    <button class="bp" id="btn-salvar-prod" onclick="salvarProduto()">Salvar Produto</button>
+    <button class="bcn" onclick="closeOv('ov-add-prod');limparFormProd()">Cancelar</button>
+  </div>
+</div>
+
+<!-- ADD DESPESA -->
+<div class="ov" id="ov-add-desp">
+  <div class="ob"><div class="oh"></div><div class="ot">&#x1F4B8; Nova Despesa</div>
+    <div class="field"><label>Descricao</label><input type="text" id="ad-desc" placeholder="Ex: Aluguel Boxe Pranchao"></div>
+    <div class="field"><label>Valor (R$)</label><input type="number" id="ad-valor" placeholder="0,00" min="0" step="0.01" inputmode="decimal"></div>
+    <div class="field"><label>Categoria</label>
+      <select id="ad-cat">
+        <option value="Aluguel">Aluguel / Boxe</option>
+        <option value="Salario">Salario / Comissao</option>
+        <option value="Alimentacao">Alimentacao Equipe</option>
+        <option value="DAS">DAS MEI</option>
+        <option value="Embalagem">Embalagem / Sacola</option>
+        <option value="Frete">Frete de Compras</option>
+        <option value="Marketing">Marketing / Anuncio</option>
+        <option value="Equipamento">Equipamento</option>
+        <option value="Manutencao">Manutencao</option>
+        <option value="Outros">Outros</option>
+      </select>
+    </div>
+    <div class="field"><label>Tipo</label>
+      <select id="ad-tipo"><option value="fixa">Fixa Mensal</option><option value="variavel">Variavel</option><option value="eventual">Eventual</option></select>
+    </div>
+    <div class="field"><label>Data</label><input type="date" id="ad-data"></div>
+    <button class="bp" id="btn-salvar-desp" onclick="salvarDespesa()">Registrar Despesa</button>
+    <button class="bcn" onclick="closeOv('ov-add-desp')">Cancelar</button>
+  </div>
+</div>
+
+<!-- ADD FUNCIONARIA -->
+<div class="ov" id="ov-add-func">
+  <div class="ob"><div class="oh"></div><div class="ot">&#x1F464; Nova Funcionaria</div>
+    <div class="field"><label>Nome completo</label><input type="text" id="af-nome" placeholder="Ex: Maria Silva"></div>
+    <div class="field"><label>Funcao</label>
+      <select id="af-funcao" onchange="toggleDiarista()"><option value="vendedora">Vendedora</option><option value="gerente">Gerente</option><option value="diarista">Diarista</option><option value="admin">Admin</option></select>
+    </div>
+    <div class="field"><label>Email (login)</label><input type="email" id="af-email" placeholder="email@exemplo.com" autocorrect="off" autocapitalize="none"></div>
+    <div class="field"><label>Senha inicial</label><input type="password" id="af-senha" placeholder="Minimo 6 caracteres"></div>
+    <div class="field"><label>WhatsApp</label><input type="tel" id="af-wpp" placeholder="(11) 99999-9999"></div>
+    <div class="field"><label>Comissao %</label><input type="number" id="af-comm" value="2" min="0" max="100" step="0.5" inputmode="decimal"></div>
+    <div id="af-diarista-wrap" style="display:none"><div class="field"><label>Acesso expira em</label><input type="datetime-local" id="af-expira"></div></div>
+    <button class="bp" id="btn-add-func" onclick="cadastrarFuncionaria()">Cadastrar</button>
+    <button class="bcn" onclick="closeOv('ov-add-func')">Cancelar</button>
+  </div>
+</div>
+
+<!-- EDITAR FUNCIONARIA -->
+<div class="ov" id="ov-edit-func">
+  <div class="ob"><div class="oh"></div><div class="ot">&#x270F;&#xFE0F; Editar Funcionaria</div>
+    <input type="hidden" id="ef-id">
+    <div class="field"><label>Nome</label><input type="text" id="ef-nome"></div>
+    <div class="field"><label>Funcao</label>
+      <select id="ef-funcao"><option value="vendedora">Vendedora</option><option value="gerente">Gerente</option><option value="diarista">Diarista</option><option value="admin">Admin</option></select>
+    </div>
+    <div class="field"><label>WhatsApp</label><input type="tel" id="ef-wpp" placeholder="(11) 99999-9999"></div>
+    <div class="field"><label>Comissao %</label><input type="number" id="ef-comm" value="2" min="0" max="100" step="0.5" inputmode="decimal"></div>
+    <div class="field"><label>Status</label>
+      <select id="ef-status"><option value="ativo">Ativo</option><option value="suspenso">Suspenso</option><option value="inativo">Inativo</option></select>
+    </div>
+    <div class="field"><label>Nova senha (opcional)</label><input type="password" id="ef-senha" placeholder="Deixe vazio para manter"></div>
+    <button class="bp" id="btn-edit-func" onclick="salvarEdicaoFunc()">Salvar Alteracoes</button>
+    <button class="bcn" onclick="closeOv('ov-edit-func')">Cancelar</button>
+  </div>
+</div>
+
+<!-- CONFIRMAR EXCLUSAO FUNC -->
+<div class="ov" id="ov-del-func">
+  <div class="ob" style="text-align:center"><div class="oh"></div><div style="font-size:38px;margin-bottom:10px">&#x26A0;&#xFE0F;</div>
+    <div class="ot">Excluir funcionaria?</div>
+    <div style="font-size:13px;color:var(--mu);margin-bottom:6px" id="del-func-nome">-</div>
+    <div style="font-size:11px;color:var(--rd);margin-bottom:16px">O historico de vendas sera mantido.</div>
+    <input type="hidden" id="del-func-id">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px"><button class="bs2" style="margin-top:0" onclick="closeOv('ov-del-func')">Cancelar</button><button class="brd" onclick="excluirFunc()">Excluir</button></div>
+  </div>
+</div>
+
+<!-- CONFIRMAR EXCLUSAO PROD -->
+<div class="ov" id="ov-del-prod">
+  <div class="ob" style="text-align:center"><div class="oh"></div><div style="font-size:38px;margin-bottom:10px">&#x1F5D1;&#xFE0F;</div>
+    <div class="ot">Excluir produto?</div>
+    <div style="font-size:13px;color:var(--mu);margin-bottom:16px" id="del-prod-nome">-</div>
+    <input type="hidden" id="del-prod-id">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px"><button class="bs2" style="margin-top:0" onclick="closeOv('ov-del-prod')">Cancelar</button><button class="brd" onclick="excluirProduto()">Excluir</button></div>
+  </div>
+</div>
+
+<!-- MODAL NOTA -->
+<div class="ov" id="ov-nota-new">
+  <div class="ob"><div class="oh"></div><div class="ot">Nova Anotacao</div>
+    <div class="field"><label>Tipo</label><select id="nota-tipo"><option value="problema">&#x1F534; Problema</option><option value="sugestao">&#x1F4A1; Sugestao</option><option value="elogio">&#x2B50; Elogio</option><option value="outro">&#x1F4AC; Outro</option></select></div>
+    <div class="field"><label>Titulo</label><input type="text" id="nota-ttl-inp" placeholder="Ex: Cliente reclamou..."></div>
+    <div class="field"><label>Descricao</label><textarea id="nota-txt-inp" style="height:80px;resize:none" placeholder="Descreva em detalhes..."></textarea></div>
+    <button class="bp" onclick="salvarNota()">Salvar</button>
+    <button class="bcn" onclick="closeOv('ov-nota-new')">Cancelar</button>
+  </div>
+</div>
+
+<!-- FECHAMENTO -->
+<div class="ov" id="ov-fech">
+  <div class="ob" style="text-align:center"><div class="oh"></div><div style="font-size:36px;margin-bottom:10px">&#x1F4CB;</div>
+    <div class="ot">Solicitar Fechamento?</div>
+    <div style="font-size:12px;color:var(--mu);margin-bottom:16px">A gerente sera notificada para conferir e autorizar.</div>
+    <button class="bp" onclick="confFech()">Solicitar</button>
+    <button class="bcn" onclick="closeOv('ov-fech')">Cancelar</button>
+  </div>
+</div>
+
+<!-- AVULSA -->
+<div class="ov" id="ov-av">
+  <div style="background:var(--s1);border:1px solid var(--bd);border-radius:22px 22px 0 0;width:100%;max-width:480px;height:85%;display:flex;flex-direction:column;overflow:hidden">
+    <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch">
+      <div style="padding:14px 14px 0"><div class="oh" style="margin:0 auto 12px"></div><div style="font-size:15px;font-weight:900;margin-bottom:2px">Venda Avulsa</div><div style="font-size:11px;color:var(--mu);margin-bottom:10px">Produto sem cadastro</div></div>
+      <div style="margin:0 14px 9px;background:var(--s2);border:1.5px solid var(--bd);border-radius:13px;padding:11px 14px;text-align:center"><div style="font-size:9px;text-transform:uppercase;letter-spacing:2px;color:var(--mu);font-weight:700;margin-bottom:3px">Valor unitario</div><div style="font-size:32px;font-weight:900;letter-spacing:-1.5px;line-height:1;min-height:38px" id="avdv">R$ 0,00</div></div>
+      <div style="margin:0 14px 8px;background:var(--s2);border:1.5px solid var(--bd);border-radius:11px;padding:9px 11px"><div style="font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--mu);font-weight:700;margin-bottom:3px">Descricao</div><input type="text" id="avdesc" placeholder="Ex: Vestido rosa G" maxlength="50" autocomplete="off" style="width:100%;background:none;border:none;color:var(--tx);font-size:16px;font-weight:700;outline:none"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:0 14px 8px">
+        <div style="background:var(--s2);border:1.5px solid var(--bd);border-radius:11px;padding:9px 11px"><div style="font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--mu);font-weight:700;margin-bottom:4px">Qtd</div><div style="display:flex;align-items:center;gap:6px"><button onclick="avq(-1)" style="width:26px;height:26px;border-radius:6px;background:var(--s3);border:none;color:var(--tx);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center">-</button><span id="avqd" style="font-size:15px;font-weight:800;flex:1;text-align:center">1</span><button onclick="avq(1)" style="width:26px;height:26px;border-radius:6px;background:var(--s3);border:none;color:var(--tx);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center">+</button></div></div>
+        <div style="background:var(--s2);border:1.5px solid var(--bd);border-radius:11px;padding:9px 11px"><div style="font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--mu);font-weight:700;margin-bottom:4px">Total</div><div id="avtot" style="font-size:15px;font-weight:800;color:var(--am)">R$ 0,00</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px;padding:0 14px 8px">
+        <button class="ppin" onclick="avn('1')">1</button><button class="ppin" onclick="avn('2')">2</button><button class="ppin" onclick="avn('3')">3</button>
+        <button class="ppin" onclick="avn('4')">4</button><button class="ppin" onclick="avn('5')">5</button><button class="ppin" onclick="avn('6')">6</button>
+        <button class="ppin" onclick="avn('7')">7</button><button class="ppin" onclick="avn('8')">8</button><button class="ppin" onclick="avn('9')">9</button>
+        <button class="ppin" style="color:var(--mu)" onclick="avn(',')"> ,</button>
+        <button class="ppin" onclick="avn('0')">0</button>
+        <button class="ppin" style="background:var(--s3);color:var(--am)" onclick="avd()">DEL</button>
+      </div>
+    </div>
+    <div style="flex-shrink:0;padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--bd);background:var(--s1)">
+      <button id="btnaav" style="width:100%;padding:15px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--am),#D97706);color:#000;font-size:14px;font-weight:900;cursor:pointer;min-height:50px;margin-bottom:7px;opacity:.5" onclick="addAv()" disabled>+ Adicionar ao Carrinho</button>
+      <button class="bcn" onclick="closeOv('ov-av')">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- BARCODE PRINT -->
+<div id="print-area" style="display:none;position:fixed;inset:0;background:#fff;z-index:9999;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px">
+  <div id="bc-content" style="text-align:center;background:#fff;padding:20px;border-radius:10px;max-width:340px;width:100%">
+    <div style="font-size:13px;font-weight:700;color:#222;margin-bottom:8px" id="bc-prod-nome">-</div>
+    <svg id="bc-svg" style="max-width:100%;height:80px"></svg>
+    <div style="font-size:12px;color:#555;margin-top:4px" id="bc-cod-txt">-</div>
+    <div style="font-size:16px;font-weight:900;color:#F06E8C;margin-top:4px" id="bc-preco-txt">-</div>
+  </div>
+  <div style="display:flex;gap:10px;margin-top:16px">
+    <button onclick="window.print()" style="padding:12px 20px;border-radius:10px;border:none;background:#F06E8C;color:#fff;font-size:14px;font-weight:700;cursor:pointer">&#x1F5A8; Imprimir</button>
+    <button onclick="fecharBarcode()" style="padding:12px 20px;border-radius:10px;border:none;background:#eee;color:#333;font-size:14px;font-weight:700;cursor:pointer">Fechar</button>
+  </div>
+</div>
+
+<!-- SCANNER OVERLAY -->
+<div class="scan-ovl" id="scan-overlay">
+  <div class="tb" style="border-radius:0"><button class="back" onclick="fecharScanner()">&#x2715;</button><div style="flex:1;padding-left:8px;font-size:14px;font-weight:800">Escanear Codigo</div></div>
+  <div class="scan-view">
+    <video id="scan-video" autoplay playsinline muted></video>
+    <div class="scan-frame"><div class="scan-line"></div></div>
+    <div style="position:absolute;bottom:16px;left:0;right:0;text-align:center;font-size:12px;color:#fff;font-weight:700;text-shadow:0 1px 4px #000">Aponte para o codigo de barras</div>
+  </div>
+  <div style="padding:14px;background:var(--s1)">
+    <div style="font-size:11px;color:var(--mu);text-align:center;margin-bottom:8px" id="scan-status">Iniciando camera...</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <input style="padding:12px;background:var(--s2);border:1.5px solid var(--bd);border-radius:11px;color:var(--tx);font-size:16px;outline:none;text-align:center;font-weight:700" type="text" id="scan-manual" placeholder="Digite manualmente" autocomplete="off">
+      <button class="bgn" style="padding:12px" onclick="usarManual()">Usar</button>
+    </div>
+  </div>
+</div>
+
+<!-- FAB HOME -->
+<button class="fab-home" id="fab-home" onclick="goHome()">&#x1F3E0;</button>
+
+<!-- BARRA INFERIOR INTERNA (telas sem bnav) -->
+<div class="bbar" id="bbar-inner">
+  <button class="bbar-btn bbar-back" onclick="goBack()">&#x2190; Voltar</button>
+  <button class="bbar-btn bbar-home" onclick="goHome()">&#x1F3E0; Inicio</button>
+</div>
+
+<!-- BARRA INFERIOR NOTAS (com botao nova) -->
+<div class="bbar" id="bbar-notas">
+  <button class="bbar-btn bbar-back" onclick="goBack()">&#x2190; Voltar</button>
+  <button class="bbar-btn bbar-action" onclick="openOv('ov-nota-new')">+ Nova Anotacao</button>
+</div>
+<!-- TOAST -->
+<div class="toast" id="tst"></div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+<script>
+const SUPA_URL="https://crflnclgpnjqlsyxlznx.supabase.co",SUPA_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNyZmxuY2xncG5qcWxzeXhsem54Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE1OTk1MDQsImV4cCI6MjA5NzE3NTUwNH0.f9XOEpaA8WXa2kRsTXnvKEA78z6Z4sXdNmGptBnMq6o";
+const sb=supabase.createClient(SUPA_URL,SUPA_KEY,{auth:{autoRefreshToken:true,persistSession:true,detectSessionInUrl:false,flowType:"implicit"}});
+
+var ROLE="",CURRENT_USER=null,CURRENT_FUNC=null,PREV="s-login";
+var PD={},PRODS_CACHE=[],FUNCS_CACHE=[],NOTAS=[],DESPS_CACHE=[];
+var COMM={j:{pct:2,on:true},g:{pct:1,on:true}};
+var cart=[],qty=1,curPM="cred",curProd=null;
+var avRaw="",avQty=1,pfStep=1,toastT=null;
+var currentToken=null,tokTimer=null,pinBuf="",pinFails=0,pinLocked=false;
+var PROD_EDIT_ID=null,SCAN_MODE="venda",scanStream=null,filtCatAtual="",filtDespAtual="";
+var HOME_MAP={v:"s-pdv-home",g:"s-ger-home",d:"s-diar-home",a:"s-admin"};
+
+// NAV
+function go(id){
+  document.querySelectorAll(".scr").forEach(function(s){s.classList.remove("on","sIn");});
+  var el=document.getElementById(id);if(!el)return;
+  el.classList.add("on","sIn");PREV=id;
+  // FAB home para vendedora/diarista
+  var fab=document.getElementById("fab-home");
+  if(fab)fab.style.display="none";
+  // Barra inferior interna
+  var bbar=document.getElementById("bbar-inner");
+  var bbarN=document.getElementById("bbar-notas");
+  if(bbar)bbar.classList.remove("on");
+  if(bbarN)bbarN.classList.remove("on");
+  // Telas que precisam de barra inferior (nao tem bnav)
+  var telasBbar=["s-vender","s-estoque","s-minhas-vendas","s-success","s-token","s-ao-vivo"];
+  var telasNotas=["s-notas"];
+  if(CURRENT_USER){
+    if(telasBbar.indexOf(id)>=0){if(bbar)bbar.classList.add("on");}
+    if(telasNotas.indexOf(id)>=0){if(bbarN)bbarN.classList.add("on");}
+  }
+  // Padding bottom para telas com barra
+  if(bbar&&bbar.classList.contains("on")){if(el.querySelector(".sb"))el.querySelector(".sb").style.paddingBottom="80px";}
+}
+function goBack(){
+  var map={
+    "s-vender":HOME_MAP[ROLE],"s-estoque":HOME_MAP[ROLE],"s-minhas-vendas":HOME_MAP[ROLE],
+    "s-success":HOME_MAP[ROLE],"s-token":"s-ger-home","s-ao-vivo":"s-ger-home",
+    "s-notas":HOME_MAP[ROLE]
+  };
+  go(map[PREV]||HOME_MAP[ROLE]||"s-login");
+}
+function goHome(){if(!CURRENT_USER){go("s-login");return;}go(HOME_MAP[ROLE]||"s-login");}
+
+// LOGIN
+async function doLogin(){
+  var email=(document.getElementById("lgu").value||"").trim().toLowerCase();
+  var senha=(document.getElementById("lgp").value||"").trim();
+  if(!email||!senha){toast("Preencha email e senha","ter");return;}
+  var btn=document.getElementById("btn-login");
+  if(btn){btn.textContent="Entrando...";btn.disabled=true;}
+  try{
+    await new Promise(function(r){setTimeout(r,200);});
+    var r=await sb.auth.signInWithPassword({email:email,password:senha});
+    if(r.error)throw r.error;
+    await afterLogin(r.data.user);
+  }catch(e){
+    var msg=e.message||"";
+    if(msg.indexOf("Load failed")>=0||msg.indexOf("fetch")>=0)toast("Erro de conexao. Verifique sua internet.","ter");
+    else if(msg.indexOf("Invalid")>=0||msg.indexOf("credentials")>=0)toast("Email ou senha incorretos","ter");
+    else toast("Erro: "+msg.substring(0,50),"ter");
+  }finally{if(btn){btn.textContent="Entrar";btn.disabled=false;}}
+}
+
+async function afterLogin(user){
+  CURRENT_USER=user;
+  var r=await sb.from("funcionarias").select("*").eq("user_id",user.id).single();
+  if(r.error||!r.data){toast("Perfil nao encontrado. Fale com o Admin.","ter");await sb.auth.signOut();CURRENT_USER=null;return;}
+  CURRENT_FUNC=r.data;
+  ROLE=r.data.funcao==="admin"?"a":r.data.funcao==="gerente"?"g":r.data.funcao==="diarista"?"d":"v";
+  if(ROLE==="d"&&r.data.acesso_expira_em&&new Date(r.data.acesso_expira_em)<new Date()){toast("Seu acesso expirou.","ter");await sb.auth.signOut();CURRENT_USER=null;return;}
+  var nm=r.data.nome?r.data.nome.split(" ")[0]:"Usuario";
+  var ini=nm.charAt(0).toUpperCase();
+  ["pdv-av","ger-av","adm-av","diar-av"].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=ini;});
+  var gr=document.getElementById("pdv-greet");if(gr)gr.textContent="Ola, "+nm+"!";
+  var gg=document.getElementById("ger-greet");if(gg)gg.textContent="Ola, "+nm+"!";
+  var dg=document.getElementById("diar-greet");if(dg)dg.textContent="Ola, "+nm+"!";
+  var dias=["Dom","Seg","Ter","Qua","Qui","Sex","Sab"],meses=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+  var now=new Date();
+  var ds=dias[now.getDay()]+", "+now.getDate()+" "+meses[now.getMonth()]+" "+now.getFullYear();
+  ["pdv-sub","ger-sub","dash-data"].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=ds;});
+  var da=document.getElementById("ad-data");if(da)da.value=now.toISOString().split("T")[0];
+  await carregarProdutosDB();
+  if(ROLE==="a"){await carregarDashboardReal();await carregarEquipe();await carregarDespesas();};
+  if(ROLE==="g"){iniciarRealtime();await carregarEquipeComissoes();};
+  go(HOME_MAP[ROLE]||"s-pdv-home");
+}
+
+async function fazerLogout(){
+  await sb.auth.signOut();
+  CURRENT_USER=null;CURRENT_FUNC=null;ROLE="";PD={};cart=[];NOTAS=[];
+  renderCart();updSt();go("s-login");toast("Sessao encerrada","tok");
+}
+
+sb.auth.getSession().then(function(r){if(r.data&&r.data.session)afterLogin(r.data.session.user).catch(function(){go("s-login");});});
+
+// PRODUTOS DB
+async function carregarProdutosDB(){
+  try{
+    var r=await sb.from("produtos").select("*").eq("ativo",true).order("nome");
+    if(r.error||!r.data||!r.data.length)return;
+    PRODS_CACHE=r.data;PD={};
+    r.data.forEach(function(p){
+      var k=(p.codigo||p.id.substring(0,8)).toUpperCase().replace(/[^A-Z0-9]/g,"");
+      PD[k]={nm:p.nome,sk:p.codigo||k,pr:p.preco_credito,st:String(p.estoque_atual),ic:catIcon(p.categoria),abc:p.classificacao_abc||"B",produto_id:p.id,custo:p.preco_custo||0,cat:p.categoria};
+    });
+    renderEstoqueList(r.data);
+    if(ROLE==="a")renderProdAdmin(r.data,"todos");
+    var baixos=r.data.filter(function(p){return p.estoque_atual<=p.estoque_minimo;});
+    if(baixos.length){var ae=document.getElementById("alert-estoque"),at=document.getElementById("alert-estoque-txt");if(ae)ae.style.display="flex";if(at)at.textContent=baixos.map(function(p){return p.nome+" ("+p.estoque_atual+")";}).join(" · ");}
+  }catch(e){console.error("Produtos:",e);}
+}
+
+function catIcon(cat){
+  var m={"Vestidos":"&#x1F457;","Conjuntos":"&#x1F455;","Calcados":"&#x1F45F;","Acessorios":"&#x1F380;","Bebe":"&#x1F476;"};
+  return m[cat]||"&#x1F4E6;";
+}
+
+function renderEstoqueList(prods){
+  var el=document.getElementById("estoque-list");if(!el)return;
+  var q=filtCatAtual;
+  var filtrado=q?prods.filter(function(p){return p.categoria===q;}):prods;
+  var busca=(document.getElementById("est-search")||{}).value||"";
+  if(busca)filtrado=filtrado.filter(function(p){return p.nome.toLowerCase().indexOf(busca.toLowerCase())>=0||(p.codigo||"").toLowerCase().indexOf(busca.toLowerCase())>=0;});
+  if(!filtrado.length){el.innerHTML="<div style='text-align:center;padding:30px;color:var(--mu);font-size:13px'>Nenhum produto encontrado</div><div style='height:70px'></div>";return;}
+  var rows=filtrado.map(function(p){
+    var qcl=p.estoque_atual<=0?"qze":p.estoque_atual<=p.estoque_minimo?"qlo":"qok";
+    return '<div class="eitem" data-id="'+p.id+'">'
+      +'<div class="eic">'+catIcon(p.categoria)+'</div>'
+      +'<div style="flex:1"><div style="font-size:13px;font-weight:700">'+p.nome+'</div>'
+      +'<div style="font-size:10px;color:var(--mu)">'+(p.codigo||"-")+' · '+p.classificacao_abc+'</div></div>'
+      +'<div style="text-align:right"><div class="'+qcl+'" style="font-size:19px;font-weight:900">'+p.estoque_atual+'</div>'
+      +'<div style="font-size:9px;color:var(--mu)">un</div></div></div>';
+  });
+  el.innerHTML=rows.join("")+"<div style='height:70px'></div>";
+  el.querySelectorAll(".eitem[data-id]").forEach(function(it){
+    it.addEventListener("click",function(){openEstModal(it.getAttribute("data-id"));});
+  });
+}
+
+function filtCat(el,cat){
+  document.querySelectorAll("#s-estoque .ecat").forEach(function(e){e.classList.remove("on");});
+  el.classList.add("on");filtCatAtual=cat;renderEstoqueList(PRODS_CACHE);
+}
+function filtrarEstoque(){renderEstoqueList(PRODS_CACHE);}
+
+function openEstModal(prodId){
+  var p=PRODS_CACHE.find(function(x){return x.id===prodId;});
+  if(!p)return;
+  PROD_EDIT_ID=prodId;
+  var pixP=p.preco_credito>35?p.preco_credito-5:p.preco_credito<=30?p.preco_credito-3:p.preco_credito;
+  set("est-ic",catIcon(p.categoria));set("est-nm",p.nome);set("est-sk",p.codigo||"-");
+  set("est-qt",p.estoque_atual+" unidades");set("est-cu","R$ "+(p.preco_custo||0).toFixed(2).replace(".",","));
+  set("est-pr","R$ "+p.preco_credito.toFixed(2).replace(".",","));
+  set("est-px","R$ "+pixP.toFixed(2).replace(".",","));
+  set("est-abc","Categoria "+p.classificacao_abc);
+  openOv("ov-est");
+}
+
+function editarProduto(){
+  var p=PRODS_CACHE.find(function(x){return x.id===PROD_EDIT_ID;});
+  if(!p)return;
+  closeOv("ov-est");
+  set("add-prod-ttl","&#x270F;&#xFE0F; Editar Produto");
+  document.getElementById("ap-cod").value=p.codigo||"";
+  document.getElementById("ap-nome").value=p.nome;
+  document.getElementById("ap-cat").value=p.categoria||"Outros";
+  document.getElementById("ap-preco").value=p.preco_credito;
+  document.getElementById("ap-custo").value=p.preco_custo||"";
+  document.getElementById("ap-estoque").value=p.estoque_atual;
+  document.getElementById("ap-minimo").value=p.estoque_minimo||3;
+  document.getElementById("ap-abc").value=p.classificacao_abc||"B";
+  openOv("ov-add-prod");
+}
+
+function confirmarExcluirProd(){
+  var p=PRODS_CACHE.find(function(x){return x.id===PROD_EDIT_ID;});
+  if(!p)return;
+  closeOv("ov-est");
+  document.getElementById("del-prod-id").value=PROD_EDIT_ID;
+  document.getElementById("del-prod-nome").textContent=p.nome;
+  openOv("ov-del-prod");
+}
+
+async function excluirProduto(){
+  var id=document.getElementById("del-prod-id").value;
+  try{
+    await sb.from("produtos").update({ativo:false}).eq("id",id);
+    closeOv("ov-del-prod");toast("Produto removido","tok");
+    await carregarProdutosDB();
+  }catch(e){toast("Erro: "+(e.message||"").substring(0,40),"ter");}
+}
+
+async function salvarProduto(){
+  var nome=(document.getElementById("ap-nome").value||"").trim();
+  var cod=(document.getElementById("ap-cod").value||"").trim();
+  var cat=document.getElementById("ap-cat").value;
+  var preco=parseFloat(document.getElementById("ap-preco").value)||0;
+  var custo=parseFloat(document.getElementById("ap-custo").value)||0;
+  var estoque=parseInt(document.getElementById("ap-estoque").value)||0;
+  var minimo=parseInt(document.getElementById("ap-minimo").value)||3;
+  var abc=document.getElementById("ap-abc").value;
+  if(!nome||!preco){toast("Preencha nome e preco","ter");return;}
+  var btn=document.getElementById("btn-salvar-prod");if(btn){btn.textContent="Salvando...";btn.disabled=true;}
+  try{
+    var sessP=await sb.auth.getSession();
+    if(!sessP.data||!sessP.data.session){toast("Sessao expirada. Faca login novamente.","ter");go("s-login");return;}
+    var dados={nome:nome,codigo:cod||null,categoria:cat,preco_credito:preco,preco_custo:custo,estoque_atual:estoque,estoque_minimo:minimo,classificacao_abc:abc,ativo:true,atualizado_em:new Date().toISOString()};
+    if(PROD_EDIT_ID){
+      var ru=await sb.from("produtos").update(dados).eq("id",PROD_EDIT_ID);
+      if(ru.error){toast("Erro ao atualizar: "+ru.error.message,"ter");return;}
+      toast("Produto atualizado!","tok");
+    }else{
+      var ri=await sb.from("produtos").insert(dados);
+      if(ri.error){toast("Erro ao cadastrar: "+ri.error.message,"ter");return;}
+      toast("Produto cadastrado!","tok");
+    }
+    closeOv("ov-add-prod");limparFormProd();
+    await carregarProdutosDB();
+    if(ROLE==="a")renderProdAdmin(PRODS_CACHE,"todos");
+  }catch(e){toast("Erro: "+(e.message||"").substring(0,50),"ter");}
+  finally{if(btn){btn.textContent="Salvar Produto";btn.disabled=false;}}
+}
+
+function limparFormProd(){
+  PROD_EDIT_ID=null;
+  ["ap-cod","ap-nome","ap-preco","ap-custo","ap-estoque"].forEach(function(id){var e=document.getElementById(id);if(e)e.value="";});
+  document.getElementById("ap-minimo").value="3";
+  document.getElementById("ap-abc").value="B";
+  set("add-prod-ttl","&#x1F4E6; Novo Produto");
+}
+
+// PRODUTOS ADMIN
+function renderProdAdmin(prods,modo){
+  var el=document.getElementById("prod-admin-list");if(!el)return;
+  if(!prods||!prods.length){el.innerHTML="<div style='padding:30px;text-align:center;color:var(--mu);font-size:13px'>Nenhum produto cadastrado</div>";return;}
+  var lista=prods;
+  if(modo==="parados")lista=prods.filter(function(p){return p.estoque_atual===0;});
+  var rows=lista.map(function(p){
+    var abc=p.classificacao_abc||"B";
+    var abcColor=abc==="A"?"var(--gn)":abc==="B"?"var(--am)":"var(--rd)";
+    var pr=p.preco_credito.toFixed(2).replace(".",",");
+    return '<div style="background:var(--s2);border:1px solid var(--bd);border-radius:13px;padding:12px;margin-bottom:7px;display:flex;align-items:center;gap:10px">'
+      +'<div class="eic" style="width:38px;height:38px;font-size:16px">'+catIcon(p.categoria)+'</div>'
+      +'<div style="flex:1"><div style="font-size:13px;font-weight:700">'+p.nome+'</div>'
+      +'<div style="font-size:10px;color:var(--mu)">'+(p.codigo||"-")+' &middot; Est: '+p.estoque_atual+' &middot; <span style="color:'+abcColor+';font-weight:700">'+abc+'</span></div>'
+      +'<div style="font-size:11px;font-weight:700;color:var(--pk);margin-top:2px">R$ '+pr+'</div></div>'
+      +'<div style="display:flex;flex-direction:column;gap:5px">'
+      +'<button class="btn-prod-ver" data-id="'+p.id+'" style="padding:5px 10px;border-radius:8px;border:none;background:var(--skb);color:var(--sk);font-size:11px;font-weight:700;cursor:pointer">Ver</button>'
+      +'<button class="btn-prod-bc" data-id="'+p.id+'" style="padding:5px 10px;border-radius:8px;border:none;background:var(--gnb);color:var(--gn);font-size:11px;font-weight:700;cursor:pointer">Cod</button>'
+      +'</div></div>';
+  });
+  el.innerHTML=rows.join("");
+  el.querySelectorAll(".btn-prod-ver[data-id]").forEach(function(b){b.addEventListener("click",function(){openEstModal(b.getAttribute("data-id"));});});
+  el.querySelectorAll(".btn-prod-bc[data-id]").forEach(function(b){b.addEventListener("click",function(){gerarBarcodeById(b.getAttribute("data-id"));});});
+}
+
+function filtrarProdutosAdmin(q){
+  if(!q){renderProdAdmin(PRODS_CACHE,"todos");return;}
+  var filtrado=PRODS_CACHE.filter(function(p){return p.nome.toLowerCase().indexOf(q.toLowerCase())>=0||(p.codigo||"").toLowerCase().indexOf(q.toLowerCase())>=0;});
+  renderProdAdmin(filtrado,"todos");
+}
+
+function abcTab(el,t){
+  document.querySelectorAll(".abc-tab").forEach(function(e){e.classList.remove("on");});
+  el.classList.add("on");renderProdAdmin(PRODS_CACHE,t);
+}
+
+// BARCODE
+function gerarBarcode(){
+  var p=PRODS_CACHE.find(function(x){return x.id===PROD_EDIT_ID;});
+  if(!p)return;closeOv("ov-est");gerarBarcodeById(p.id);
+}
+
+function gerarBarcodeById(id){
+  var p=PRODS_CACHE.find(function(x){return x.id===id;});
+  if(!p){toast("Produto nao encontrado","ter");return;}
+  var cod=p.codigo||p.id.substring(0,12).replace(/[^0-9]/g,"0").substring(0,12);
+  set("bc-prod-nome",p.nome);set("bc-cod-txt",cod);
+  set("bc-preco-txt","R$ "+p.preco_credito.toFixed(2).replace(".",","));
+  var svgEl=document.getElementById("bc-svg");
+  if(svgEl&&typeof JsBarcode!=="undefined"){
+    try{JsBarcode(svgEl,cod,{format:"CODE128",width:2,height:70,displayValue:true,fontSize:12,margin:5});}
+    catch(e){JsBarcode(svgEl,p.nome.substring(0,20),{format:"CODE128",width:2,height:70,displayValue:true,fontSize:12,margin:5});}
+  }
+  var pa=document.getElementById("print-area");if(pa)pa.style.display="flex";
+}
+
+function fecharBarcode(){var pa=document.getElementById("print-area");if(pa)pa.style.display="none";}
+
+// SCANNER
+function abrirScanner(modo){
+  SCAN_MODE=modo;
+  var ovl=document.getElementById("scan-overlay");if(ovl)ovl.classList.add("on");
+  set("scan-status","Iniciando camera...");
+  if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){
+    navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"}}).then(function(stream){
+      scanStream=stream;
+      var vid=document.getElementById("scan-video");if(vid){vid.srcObject=stream;vid.play();}
+      set("scan-status","Camera ativa — aponte para o codigo");
+    }).catch(function(e){set("scan-status","Camera nao disponivel — digite manualmente");console.error(e);});
+  }else{set("scan-status","Camera nao suportada — digite manualmente");}
+}
+
+function fecharScanner(){
+  if(scanStream){scanStream.getTracks().forEach(function(t){t.stop();});scanStream=null;}
+  var ovl=document.getElementById("scan-overlay");if(ovl)ovl.classList.remove("on");
+}
+
+function usarManual(){
+  var v=(document.getElementById("scan-manual").value||"").trim();
+  if(!v){toast("Digite um codigo","ter");return;}
+  fecharScanner();usarCodigo(v);
+  document.getElementById("scan-manual").value="";
+}
+
+function usarCodigo(cod){
+  if(SCAN_MODE==="produto"){document.getElementById("ap-cod").value=cod;toast("Codigo: "+cod,"tok");}
+  else{document.getElementById("sinp").value=cod;buscar();}
+}
+
+// VENDER
+function buscar(){
+  var v=(document.getElementById("sinp").value||"").trim();
+  if(!v){toast("Digite um codigo ou nome","twa");return;}
+  var vu=v.toUpperCase();
+  var found=null;
+  Object.keys(PD).forEach(function(k){
+    if(k===vu||(PD[k].sk||"").toUpperCase()===vu||PD[k].nm.toUpperCase().indexOf(vu)>=0)found=k;
+  });
+  if(found){showProd(found);var el=document.getElementById("sinp");el.classList.add("lit");setTimeout(function(){el.classList.remove("lit");},600);}
+  else toast("Produto nao encontrado: "+v,"ter");
+}
+
+function buscarCat(cat){
+  var found=Object.keys(PD).find(function(k){return PD[k].cat===cat;});
+  if(found)showProd(found);else toast(cat+": sem produtos cadastrados","twa");
+}
+
+function pixPrice(p){if(p>35)return+(p-5).toFixed(2);if(p<=30)return+(p-3).toFixed(2);return p;}
+
+function showProd(k){
+  var p=PD[k];if(!p)return;
+  curProd={key:k,pr:p.pr,produto_id:p.produto_id};
+  set("pr-ic",p.ic);set("pr-nm",p.nm);
+  set("pr-sk",p.sk+" · Estoque: "+p.st+" un");
+  set("pr-st","Categoria "+p.abc+" · Custo: R$ "+p.custo.toFixed(2).replace(".",","));
+  set("pr-pr","R$ "+p.pr.toFixed(2).replace(".",","));
+  var pp=pixPrice(p.pr);
+  var pxEl=document.getElementById("pr-pix");
+  if(curPM==="pix"&&pp<p.pr){if(pxEl){pxEl.textContent="Pix: R$ "+pp.toFixed(2).replace(".",",");pxEl.style.display="block";}}
+  else{if(pxEl)pxEl.style.display="none";}
+  document.getElementById("dscinp").value="";
+  document.getElementById("tok-inp").value="";
+  document.getElementById("tokrow").style.display="none";
+  document.getElementById("prodcard").classList.add("on");
+  qty=1;set("qnum","1");
+  setTimeout(function(){document.getElementById("vbody").scrollTop=300;},100);
+}
+
+function selPM(el,m){
+  document.querySelectorAll("#pminis .pmini").forEach(function(e){e.classList.remove("on");});
+  el.classList.add("on");curPM=m;
+  document.getElementById("pnote").style.display=m==="pix"?"block":"none";
+  if(curProd)showProd(curProd.key);
+}
+
+function chkDisc(){
+  var d=parseFloat(document.getElementById("dscinp").value)||0;
+  document.getElementById("tokrow").style.display=d>0?"flex":"none";
+  if(d<=0)document.getElementById("tok-inp").value="";
+}
+
+function chkToken(){
+  var entered=(document.getElementById("tok-inp").value||"").trim();
+  if(entered.length===4){
+    if(currentToken&&!currentToken.used&&Date.now()<currentToken.expires&&entered===currentToken.code){currentToken.used=true;toast("Token valido! Desconto autorizado.","tok");}
+    else{pinFails++;document.getElementById("tok-inp").value="";toast(pinFails>=3?"3 erros. Token bloqueado.":"Token invalido. "+pinFails+"/3","ter");}
+  }
+}
+
+function cq(d){qty=Math.max(1,qty+d);set("qnum",qty);}
+
+function addC(){
+  if(!curProd)return;
+  var base=curPM==="pix"?pixPrice(curProd.pr):curProd.pr;
+  var dsc=parseFloat(document.getElementById("dscinp").value)||0;
+  if(dsc>0){
+    var tok=(document.getElementById("tok-inp").value||"").trim();
+    if(!currentToken||currentToken.used||Date.now()>currentToken.expires||tok!==currentToken.code){toast("Desconto extra requer token valido da Gerente.","ter");return;}
+    currentToken.used=true;
+  }
+  var fp=Math.max(0,base-dsc);
+  var commRate=COMM.j.on?COMM.j.pct/100:0;
+  var badges=[];
+  if(curPM==="pix"&&fp<curProd.pr)badges.push("pix");
+  if(dsc>0)badges.push("tok");
+  cart.push({ic:PD[curProd.key].ic,nm:PD[curProd.key].nm,qty:qty,pr:fp,badges:badges,comm:+(fp*qty*commRate).toFixed(2),produto_id:curProd.produto_id,desconto:dsc});
+  renderCart();updSt();
+  document.getElementById("prodcard").classList.remove("on");
+  document.getElementById("sinp").value="";
+  document.getElementById("dscinp").value="";
+  document.getElementById("tok-inp").value="";
+  document.getElementById("tokrow").style.display="none";
+  curProd=null;
+}
+
+function renderCart(){
+  var el=document.getElementById("cartlist"),sec=document.getElementById("cartsec");
+  if(!cart.length){sec.style.display="none";return;}
+  sec.style.display="block";
+  el.innerHTML=cart.map(function(it,i){
+    var bh="";
+    if(it.badges&&it.badges.indexOf("pix")>=0)bh+="<span class='pxb'>Pix</span> ";
+    if(it.badges&&it.badges.indexOf("tok")>=0)bh+="<span class='tkb'>Token</span> ";
+    if(it.av)bh+="<span class='avb'>Avulso</span>";
+    return "<div style='background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:11px;margin-bottom:6px;display:flex;align-items:center;gap:9px'>" +
+      "<span style='font-size:19px;flex-shrink:0'>"+it.ic+"</span>" +
+      "<div style='flex:1;min-width:0'><div style='font-size:12px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap'>"+it.nm+"</div>" +
+      "<div style='font-size:11px;color:var(--mu);margin-top:1px'>"+it.qty+"x R$ "+it.pr.toFixed(2).replace(".",",")+" "+bh+"</div></div>" +
+      "<div style='font-size:13px;font-weight:800;color:var(--pk);flex-shrink:0'>R$ "+(it.qty*it.pr).toFixed(2).replace(".",",")+"</div>" +
+      "<button class='ci-del' onclick='rmC("+i+")'>x</button></div>";
+  }).join("");
+}
+
+function rmC(i){cart.splice(i,1);renderCart();updSt();}
+function doClear(){cart=[];renderCart();updSt();closeOv("ov-clr");}
+function cartTot(){return cart.reduce(function(s,i){return s+i.qty*i.pr;},0);}
+function cartComm(){return cart.reduce(function(s,i){return s+(i.comm||0);},0);}
+
+function updSt(){
+  var n=cart.reduce(function(a,i){return a+i.qty;},0);
+  var stb=document.getElementById("stbar"),ci=document.getElementById("cartind");
+  if(!n){stb.style.display="none";ci.style.display="none";return;}
+  stb.style.display="block";ci.style.display="flex";
+  ci.textContent=n;
+  set("csum",n+(n===1?" item":" itens"));
+  set("ctot","R$ "+cartTot().toFixed(2).replace(".",","));
+}
+
+function openPay(){
+  set("pay-total","R$ "+cartTot().toFixed(2).replace(".",","));
+  document.querySelectorAll("#ov-pay .pmini").forEach(function(e,i){e.classList.toggle("on",i===0);});
+  openOv("ov-pay");
+}
+function payMet(el,m){document.querySelectorAll("#ov-pay .pmini").forEach(function(e){e.classList.remove("on");});el.classList.add("on");}
+
+async function confVenda(){
+  var tot=cartTot(),disc=cart.reduce(function(s,i){return s+(i.desconto||0)*i.qty;},0);
+  var met=document.querySelector("#ov-pay .pmini.on");
+  var metKey=met?met.getAttribute("onclick").match(/'([^']+)'/)[1]:"cred";
+  var metTxt=met?met.textContent.trim():"Credito";
+  closeOv("ov-pay");
+  if(CURRENT_FUNC){
+    try{
+      var commRate=(ROLE==="g"?COMM.g.on:COMM.j.on)?(ROLE==="g"?COMM.g.pct:COMM.j.pct)/100:0;
+      var comm=+(tot*commRate).toFixed(2);
+      // Verificar sessao ativa
+      var sess=await sb.auth.getSession();
+      if(!sess.data||!sess.data.session){
+        toast("Sessao expirada. Faca login novamente.","ter");
+        go("s-login");return;
+      }
+      var vr=await sb.from("vendas").insert({
+        vendedora_id:CURRENT_FUNC.id,
+        forma_pagamento:metKey,
+        valor_bruto:tot,
+        valor_desconto:disc,
+        valor_liquido:tot,
+        comissao_gerada:comm,
+        modo:"online"
+      }).select().single();
+      if(vr.error){
+        console.error("Erro venda RLS:",JSON.stringify(vr.error));
+        toast("Erro ao salvar: "+vr.error.message,"ter");
+        return;
+      }
+      if(vr.data){
+        var itens=cart.map(function(it){
+          return {
+            venda_id:vr.data.id,
+            produto_id:it.produto_id||null,
+            nome_produto:it.nm,
+            quantidade:it.qty,
+            preco_unitario:it.pr,
+            preco_custo:0,
+            desconto_item:it.desconto||0,
+            comissao_item:+(it.pr*it.qty*commRate).toFixed(2)
+          };
+        });
+        var ir=await sb.from("venda_itens").insert(itens);
+        if(ir.error)console.error("Itens:",ir.error.message);
+      }
+      var ce=document.getElementById("succ-comm");
+      if(comm>0){ce.textContent="Sua comissao: +R$ "+comm.toFixed(2).replace(".",",");ce.style.display="block";}
+      else ce.style.display="none";
+    }catch(e){
+      console.error("Venda exception:",e);
+      toast("Erro de conexao. Tente novamente.","ter");
+      return;
+    }
+  }
+  set("succ-met",metTxt);
+  cart=[];renderCart();updSt();go("s-success");
+}
+
+function novaVenda(){go("s-vender");}
+function confFech(){closeOv("ov-fech");toast("Solicitacao enviada para a Gerente!","tok");}
+
+// TOKEN
+function pinKey(d){if(pinLocked){toast("PIN bloqueado.","ter");return;}if(pinBuf.length>=4)return;pinBuf+=d;updPD();if(pinBuf.length===4)setTimeout(valPin,300);}
+function pinDel(){pinBuf=pinBuf.slice(0,-1);updPD();}
+function updPD(){for(var i=0;i<4;i++){var d=document.getElementById("pd"+i);if(d)d.classList.toggle("f",i<pinBuf.length);}}
+function valPin(){
+  if(pinBuf==="1234"){pinFails=0;genToken();}
+  else{pinFails++;pinBuf="";updPD();if(pinFails>=3){pinLocked=true;toast("3 erros. Bloqueado 2 min.","ter");setTimeout(function(){pinLocked=false;pinFails=0;},120000);}else toast("PIN incorreto. "+pinFails+"/3","ter");}
+}
+function genToken(){
+  if(tokTimer)clearInterval(tokTimer);
+  var code=""+Math.floor(1000+Math.random()*9000);
+  currentToken={code:code,expires:Date.now()+5*60*1000,used:false};
+  set("tok-code",code);set("ger-tok-status","Ativo: "+code);pinBuf="";updPD();
+  toast("Token "+code+" gerado!","tok");
+  var secs=300;
+  tokTimer=setInterval(function(){
+    secs--;
+    var pg=document.getElementById("tok-prog"),tm=document.getElementById("tok-timer");
+    if(pg)pg.style.width=(secs/300*100)+"%";
+    if(tm)tm.textContent="Expira em "+Math.floor(secs/60)+":"+(secs%60<10?"0":"")+(secs%60);
+    if(secs<=0){clearInterval(tokTimer);currentToken=null;set("tok-code","----");set("tok-timer","Digite seu PIN para gerar");set("ger-tok-status","Nenhum");if(pg)pg.style.width="0%";}
+  },1000);
+}
+function clearToken(){if(tokTimer)clearInterval(tokTimer);currentToken=null;pinBuf="";updPD();set("tok-code","----");set("tok-timer","Digite seu PIN para gerar");set("ger-tok-status","Nenhum");if(document.getElementById("tok-prog"))document.getElementById("tok-prog").style.width="0%";toast("Token invalidado.","tok");}
+
+// MINHAS VENDAS
+function mvTab(el,p){document.querySelectorAll(".htab").forEach(function(e){e.classList.remove("on");});el.classList.add("on");if(CURRENT_FUNC)carregarMinhasVendas(p);}
+
+async function carregarMinhasVendas(period){
+  if(!CURRENT_FUNC)return;
+  var now=new Date(),from;
+  if(period==="hoje")from=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  else if(period==="semana"){from=new Date(now);from.setDate(from.getDate()-7);}
+  else from=new Date(now.getFullYear(),now.getMonth(),1);
+  try{
+    var r=await sb.from("vendas").select("*,venda_itens(nome_produto)").eq("vendedora_id",CURRENT_FUNC.id).gte("data_hora",from.toISOString()).order("data_hora",{ascending:false});
+    var data=r.data||[];
+    set("mv-qtd",data.length);
+    var total=data.reduce(function(s,v){return s+v.valor_liquido;},0);
+    set("mv-total","R$"+total.toFixed(0));
+    var comm=data.reduce(function(s,v){return s+v.comissao_gerada;},0);
+    var cb=document.getElementById("mv-comm");
+    if(cb&&comm>0){cb.style.display="block";set("mv-comm-val","R$ "+comm.toFixed(2).replace(".",","));}
+    var lista=document.getElementById("mv-list");if(!lista)return;
+    if(!data.length){lista.innerHTML="<div style='text-align:center;padding:30px;color:var(--mu);font-size:13px'>Nenhuma venda neste periodo</div>";return;}
+    lista.innerHTML=data.slice(0,25).map(function(v){
+      var hora=new Date(v.data_hora).toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
+      var prod=v.venda_itens&&v.venda_itens[0]?v.venda_itens[0].nome_produto:"Avulso";
+      var commTxt=v.comissao_gerada>0?"<span style='font-size:11px;color:var(--gn);font-weight:700;margin-left:auto'>+R$ "+v.comissao_gerada.toFixed(2).replace(".",",")+"</span>":"";
+      return "<div style='background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:12px;margin-bottom:6px'><div style='display:flex;justify-content:space-between;margin-bottom:4px'><div style='font-size:13px;font-weight:700'>"+prod+"</div><div style='font-size:13px;font-weight:800;color:var(--pk)'>R$ "+v.valor_liquido.toFixed(2).replace(".",",")+"</div></div><div style='display:flex;align-items:center;gap:6px'><span style='font-size:11px;color:var(--mu)'>"+hora+" · "+v.forma_pagamento+"</span><span class='badge bok'>OK</span>"+commTxt+"</div></div>";
+    }).join("")+"<div style='height:16px'></div>";
+  }catch(e){console.error("MinhasVendas:",e);}
+}
+
+// DASHBOARD REAL
+async function carregarDashboardReal(){
+  try{
+    var hoje=new Date().toISOString().split("T")[0];
+    var r=await sb.from("vendas").select("*,venda_itens(preco_custo,quantidade)").gte("data_hora",hoje+"T00:00:00").lte("data_hora",hoje+"T23:59:59");
+    var vendas=r.data||[];
+    var recBruta=vendas.reduce(function(s,v){return s+v.valor_bruto;},0);
+    var descontos=vendas.reduce(function(s,v){return s+v.valor_desconto;},0);
+    var recLiq=vendas.reduce(function(s,v){return s+v.valor_liquido;},0);
+    var comissoes=vendas.reduce(function(s,v){return s+v.comissao_gerada;},0);
+    var qtd=vendas.length;
+    var cmv=vendas.reduce(function(s,v){return s+(v.venda_itens||[]).reduce(function(a,i){return a+(i.preco_custo||0)*i.quantidade;},0);},0);
+    var das=recLiq*0.005,lucBruto=recLiq-cmv,lucOp=lucBruto-comissoes-das-50;
+    var margem=recLiq>0?(lucOp/recLiq*100).toFixed(1):0;
+    var din=vendas.filter(function(v){return v.forma_pagamento==="dinheiro";}).reduce(function(s,v){return s+v.valor_liquido;},0);
+    var pctDin=recLiq>0?(din/recLiq*100).toFixed(1):0;
+    var fr=function(v){return "R$ "+v.toFixed(2).replace(".",",");};
+    set("kpi-receita","R$"+recLiq.toFixed(0));set("kpi-vendas-txt",qtd+" vendas");
+    set("kpi-lucro","R$"+lucOp.toFixed(0));set("kpi-margem","Margem "+margem+"%");
+    set("kpi-dinheiro","R$"+din.toFixed(0));set("kpi-dinheiro-pct",pctDin+"% do total");
+    set("kpi-desconto","R$"+descontos.toFixed(0));set("kpi-comissao","R$"+comissoes.toFixed(0));
+    set("dre-bruta",fr(recBruta));set("dre-desc","- "+fr(descontos));
+    set("dre-liq",fr(recLiq));set("dre-cmv","- "+fr(cmv));
+    set("dre-lb",fr(lucBruto));set("dre-comm","- "+fr(comissoes));
+    set("dre-das","- "+fr(das));set("dre-op",fr(lucOp));
+    set("dre-margem","Margem liquida: "+margem+"% "+(parseFloat(margem)>=30?"✅ acima da meta":"⚠️ abaixo de 30%"));
+    var rAll=await sb.from("vendas").select("valor_liquido");
+    var fatAnual=(rAll.data||[]).reduce(function(s,v){return s+v.valor_liquido;},0);
+    var pctMEI=(fatAnual/81000*100).toFixed(1);
+    set("mei-total","R$ "+fatAnual.toFixed(0)+" / R$ 81.000");
+    var mb=document.getElementById("mei-bar-fill");if(mb)mb.style.width=Math.min(parseFloat(pctMEI),100)+"%";
+    set("mei-proj","Faturamento: "+pctMEI+"% do limite MEI");
+    var now2=new Date(),h=now2.getHours();
+    var saud=h<12?"Bom dia":h<18?"Boa tarde":"Boa noite";
+    var nm=CURRENT_FUNC?CURRENT_FUNC.nome.split(" ")[0]:"Luis Felipe";
+    set("maia-hora","Atualizado · "+now2.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}));
+    set("maia-msg",saud+", "+nm+". "+(qtd>0?"Resumo do dia:":"Nenhuma venda registrada hoje."));
+    var ins=document.getElementById("maia-insights");
+    if(ins){
+      if(!qtd){ins.innerHTML="<div class='maia-insight' style='text-align:center;color:#A5B4FC'>&#x1F4CA; Os insights aparecem conforme as vendas sao registradas.</div>";return;}
+      var html="";
+      if(parseFloat(pctDin)>20)html+="<div class='maia-insight alert'>&#x26A0;&#xFE0F; Dinheiro em "+pctDin+"% (media 16%). Verifique o caixa.</div>";
+      if(parseFloat(margem)>=30)html+="<div class='maia-insight ok'>&#x1F4C8; Margem de "+margem+"% — acima da meta de 30%.</div>";
+      else html+="<div class='maia-insight warn'>&#x26A0;&#xFE0F; Margem em "+margem+"% — abaixo da meta de 30%.</div>";
+      html+="<div class='maia-insight ok'>&#x1F6D2; "+qtd+" vendas hoje — R$ "+recLiq.toFixed(2).replace(".",",")+" registrados.</div>";
+      ins.innerHTML=html;
+    }
+    set("cnt-hoje",qtd);set("mv-hoje-btn","Hoje: "+qtd+" vendas");
+  }catch(e){console.error("Dashboard:",e);}
+}
+
+// EQUIPE
+async function carregarEquipe(){
+  try{
+    var r=await sb.from("funcionarias").select("*").neq("status","inativo").order("funcao");
+    var funcs=(r.data||[]);FUNCS_CACHE=funcs;
+    var hoje=new Date().toISOString().split("T")[0];
+    var rv=await sb.from("vendas").select("vendedora_id,valor_liquido,comissao_gerada").gte("data_hora",hoje+"T00:00:00");
+    var vendas=rv.data||[];
+    var commHtml="";var totalComm=0;
+    funcs.forEach(function(f){
+      var myV=vendas.filter(function(v){return v.vendedora_id===f.id;});
+      var myComm=myV.reduce(function(s,v){return s+v.comissao_gerada;},0);
+      totalComm+=myComm;
+      if(f.comissao_ativa&&myComm>0)commHtml+="<div style='padding:11px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:10px'><div style='width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--pk),var(--tl));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff'>"+f.nome.charAt(0).toUpperCase()+"</div><div style='flex:1'><div style='font-size:12px;font-weight:700'>"+f.nome+"</div><div style='font-size:10px;color:var(--mu)'>"+f.comissao_pct+"%</div></div><div style='font-size:13px;font-weight:800;color:var(--pk)'>R$ "+myComm.toFixed(2).replace(".",",")+"</div></div>";
+    });
+    commHtml+="<div style='padding:11px 14px;display:flex;justify-content:space-between'><span style='font-size:12px;color:var(--mu)'>Total comissoes hoje</span><span style='font-size:13px;font-weight:800;color:var(--pk)'>R$ "+totalComm.toFixed(2).replace(".",",")+"</span></div>";
+    var cl=document.getElementById("comm-list");if(cl)cl.innerHTML=commHtml||"<div style='padding:14px;text-align:center;color:var(--mu);font-size:12px'>Nenhuma comissao hoje</div>";
+    var cores={admin:"linear-gradient(135deg,#059669,#0891B2)",gerente:"linear-gradient(135deg,#6366F1,#8B5CF6)",vendedora:"linear-gradient(135deg,var(--pk),var(--tl))",diarista:"linear-gradient(135deg,var(--am),#D97706)"};
+    var fl=document.getElementById("func-list");
+    if(fl){
+      var cores={admin:"linear-gradient(135deg,#059669,#0891B2)",gerente:"linear-gradient(135deg,#6366F1,#8B5CF6)",vendedora:"linear-gradient(135deg,var(--pk),var(--tl))",diarista:"linear-gradient(135deg,var(--am),#D97706)"};
+      var rows2=funcs.map(function(f){
+        var cor=cores[f.funcao]||cores.vendedora;
+        var badge=f.status==="ativo"?"<span class='badge bok'>Ativa</span>":f.status==="suspenso"?"<span class='badge bwarn'>Suspensa</span>":"<span class='badge'>Inativa</span>";
+        if(f.acesso_expira_em&&f.funcao==="diarista")badge="<span class='badge bwarn'>Temp</span>";
+        var wpp=f.whatsapp?"<div class='row'><span class='rl'>WhatsApp</span><span class='rv'>"+f.whatsapp+"</span></div>":"";
+        return '<div class="fperf-card">'
+          +'<div class="fperf-hd" data-fb="fb-'+f.id+'">'
+          +'<div style="width:38px;height:38px;border-radius:50%;background:'+cor+';display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#fff;flex-shrink:0">'+f.nome.charAt(0).toUpperCase()+'</div>'
+          +'<div style="flex:1"><div style="font-size:13px;font-weight:700">'+f.nome+'</div><div style="font-size:10px;color:var(--mu)">'+f.funcao+' · '+f.email+'</div></div>'+badge+'</div>'
+          +'<div class="fperf-body" id="fb-'+f.id+'">'
+          +'<div class="row"><span class="rl">Comissao</span><span class="rv">'+f.comissao_pct+'% '+(f.comissao_ativa?"(ativa)":"(inativa)")+'</span></div>'
+          +wpp
+          +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px">'
+          +'<button class="btn-edit-f" data-id="'+f.id+'" style="padding:10px;border-radius:10px;border:none;background:var(--skb);color:var(--sk);font-size:12px;font-weight:700;cursor:pointer">&#x270F;&#xFE0F; Editar</button>'
+          +'<button class="btn-del-f" data-id="'+f.id+'" data-nome="'+f.nome+'" style="padding:10px;border-radius:10px;border:none;background:var(--rdb);color:var(--rd);font-size:12px;font-weight:700;cursor:pointer">&#x1F5D1;&#xFE0F; Excluir</button>'
+          +'</div></div></div>';
+      });
+      fl.innerHTML=rows2.join("")+"<div style='height:10px'></div>";
+      fl.querySelectorAll(".fperf-hd[data-fb]").forEach(function(h){
+        h.addEventListener("click",function(){toggleFBody(h.getAttribute("data-fb"));});
+      });
+      fl.querySelectorAll(".btn-edit-f[data-id]").forEach(function(b){
+        b.addEventListener("click",function(){abrirEditarFunc(b.getAttribute("data-id"));});
+      });
+      fl.querySelectorAll(".btn-del-f[data-id]").forEach(function(b){
+        b.addEventListener("click",function(){confirmarExcluirFunc(b.getAttribute("data-id"),b.getAttribute("data-nome"));});
+      });
+    }
+    set("ger-comm","R$ "+totalComm.toFixed(2).replace(".",","));
+  }catch(e){console.error("Equipe:",e);}
+}
+
+async function carregarEquipeComissoes(){
+  try{
+    var hoje=new Date().toISOString().split("T")[0];
+    var rv=await sb.from("vendas").select("comissao_gerada").gte("data_hora",hoje+"T00:00:00");
+    var total=(rv.data||[]).reduce(function(s,v){return s+v.comissao_gerada;},0);
+    set("ger-comm","R$ "+total.toFixed(2).replace(".",","));
+  }catch(e){}
+}
+
+function toggleFBody(id){var el=document.getElementById(id);if(el)el.classList.toggle("on");}
+function updateComm(who){var pct=parseFloat(document.getElementById("pct-"+who).value)||0;COMM[who].pct=pct;toast("% atualizado","tok");}
+
+// CADASTRO FUNCIONARIA
+function toggleDiarista(){var w=document.getElementById("af-diarista-wrap");if(w)w.style.display=document.getElementById("af-funcao").value==="diarista"?"block":"none";}
+
+async function cadastrarFuncionaria(){
+  var nome=(document.getElementById("af-nome").value||"").trim();
+  var funcao=document.getElementById("af-funcao").value;
+  var email=(document.getElementById("af-email").value||"").trim().toLowerCase();
+  var senha=(document.getElementById("af-senha").value||"").trim();
+  var wpp=(document.getElementById("af-wpp").value||"").trim();
+  var comm=parseFloat(document.getElementById("af-comm").value)||0;
+  var expira=document.getElementById("af-expira").value;
+  if(!nome||!email||!senha){toast("Nome, email e senha sao obrigatorios","ter");return;}
+  if(senha.length<6){toast("Senha precisa ter ao menos 6 caracteres","ter");return;}
+  var btn=document.getElementById("btn-add-func");if(btn){btn.textContent="Cadastrando...";btn.disabled=true;}
+  try{
+    var su=await sb.auth.signUp({email:email,password:senha,options:{data:{nome:nome}}});
+    if(su.error)throw su.error;
+    var userId=su.data.user?su.data.user.id:null;
+    if(!userId)throw new Error("Nao foi possivel criar o usuario.");
+    var pf={user_id:userId,nome:nome,funcao:funcao,email:email,whatsapp:wpp||null,comissao_pct:comm,comissao_ativa:comm>0,status:"ativo",acesso_expira_em:(funcao==="diarista"&&expira)?new Date(expira).toISOString():null};
+    var pr=await sb.from("funcionarias").insert(pf);
+    if(pr.error)throw pr.error;
+    closeOv("ov-add-func");
+    ["af-nome","af-email","af-senha","af-wpp"].forEach(function(id){var e=document.getElementById(id);if(e)e.value="";});
+    document.getElementById("af-comm").value="2";
+    toast(nome+" cadastrada com sucesso!","tok");
+    await carregarEquipe();
+  }catch(e){
+    var msg=e.message||"";
+    if(msg.indexOf("already")>=0)toast("Este email ja esta cadastrado","ter");
+    else toast("Erro: "+msg.substring(0,50),"ter");
+  }finally{if(btn){btn.textContent="Cadastrar";btn.disabled=false;}}
+}
+
+function abrirEditarFunc(id){
+  var f=FUNCS_CACHE.find(function(x){return x.id===id;});if(!f)return;
+  document.getElementById("ef-id").value=f.id;
+  document.getElementById("ef-nome").value=f.nome||"";
+  document.getElementById("ef-funcao").value=f.funcao||"vendedora";
+  document.getElementById("ef-wpp").value=f.whatsapp||"";
+  document.getElementById("ef-comm").value=f.comissao_pct||0;
+  document.getElementById("ef-status").value=f.status||"ativo";
+  document.getElementById("ef-senha").value="";
+  openOv("ov-edit-func");
+}
+
+async function salvarEdicaoFunc(){
+  var id=document.getElementById("ef-id").value;
+  var nome=(document.getElementById("ef-nome").value||"").trim();
+  if(!nome){toast("Preencha o nome","ter");return;}
+  var btn=document.getElementById("btn-edit-func");if(btn){btn.textContent="Salvando...";btn.disabled=true;}
+  try{
+    await sb.from("funcionarias").update({nome:nome,funcao:document.getElementById("ef-funcao").value,whatsapp:document.getElementById("ef-wpp").value||null,comissao_pct:parseFloat(document.getElementById("ef-comm").value)||0,comissao_ativa:(parseFloat(document.getElementById("ef-comm").value)||0)>0,status:document.getElementById("ef-status").value,atualizado_em:new Date().toISOString()}).eq("id",id);
+    closeOv("ov-edit-func");toast(nome+" atualizada!","tok");await carregarEquipe();
+  }catch(e){toast("Erro: "+(e.message||"").substring(0,40),"ter");}
+  finally{if(btn){btn.textContent="Salvar Alteracoes";btn.disabled=false;}}
+}
+
+function confirmarExcluirFunc(id,nome){document.getElementById("del-func-id").value=id;document.getElementById("del-func-nome").textContent=nome;closeOv("ov-edit-func");openOv("ov-del-func");}
+
+async function excluirFunc(){
+  var id=document.getElementById("del-func-id").value;
+  var nome=document.getElementById("del-func-nome").textContent;
+  try{await sb.from("funcionarias").update({status:"inativo",atualizado_em:new Date().toISOString()}).eq("id",id);closeOv("ov-del-func");toast(nome+" removida","tok");await carregarEquipe();}
+  catch(e){toast("Erro: "+(e.message||"").substring(0,40),"ter");}
+}
+
+// DESPESAS
+async function carregarDespesas(){
+  try{
+    var now=new Date();
+    var from=new Date(now.getFullYear(),now.getMonth(),1).toISOString().split("T")[0];
+    var r=await sb.from("despesas").select("*").gte("data",from).order("data",{ascending:false});
+    DESPS_CACHE=r.data||[];
+    renderDespesas(DESPS_CACHE);
+  }catch(e){console.error("Despesas:",e);}
+}
+
+function renderDespesas(lista){
+  var q=filtDespAtual;
+  var filtrado=q?lista.filter(function(d){return d.tipo===q;}):lista;
+  var total=filtrado.reduce(function(s,d){return s+d.valor;},0);
+  var fixas=filtrado.filter(function(d){return d.tipo==="fixa";}).reduce(function(s,d){return s+d.valor;},0);
+  set("desp-total-mes","R$ "+total.toFixed(2).replace(".",","));
+  set("desp-total-fixas","R$ "+fixas.toFixed(2).replace(".",","));
+  var el=document.getElementById("desp-list");if(!el)return;
+  if(!filtrado.length){el.innerHTML="<div style='text-align:center;padding:30px;color:var(--mu);font-size:13px'>Nenhuma despesa neste periodo</div>";return;}
+  var tipoCor={fixa:"var(--in)",variavel:"var(--am)",eventual:"var(--rd)"};
+  var rows=filtrado.map(function(d){
+    var cor=tipoCor[d.tipo]||"var(--mu)";
+    return '<div style="background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:12px;margin-bottom:6px;display:flex;align-items:center;gap:10px">'
+      +'<div style="flex:1"><div style="font-size:13px;font-weight:700">'+d.descricao+'</div>'
+      +'<div style="font-size:10px;color:var(--mu);margin-top:2px">'+d.categoria+' · '+d.data+'</div>'
+      +'<div style="font-size:10px;font-weight:700;margin-top:2px;color:'+cor+'">'+d.tipo+'</div></div>'
+      +'<div style="text-align:right">'
+      +'<div style="font-size:15px;font-weight:900;color:var(--rd)">R$ '+d.valor.toFixed(2).replace(".",",")+'</div>'
+      +'<button class="btn-del-desp" data-id="'+d.id+'" style="font-size:10px;color:var(--mu);background:none;border:none;cursor:pointer;margin-top:4px">Excluir</button>'
+      +'</div></div>';
+  });
+  el.innerHTML=rows.join("")+"<div style='height:16px'></div>";
+  el.querySelectorAll(".btn-del-desp[data-id]").forEach(function(b){
+    b.addEventListener("click",function(){excluirDespesa(b.getAttribute("data-id"));});
+  });
+}
+
+function filtDesp(el,tipo){
+  document.querySelectorAll("#tab-desp .ecat").forEach(function(e){e.classList.remove("on");});
+  el.classList.add("on");filtDespAtual=tipo;renderDespesas(DESPS_CACHE);
+}
+
+async function salvarDespesa(){
+  var desc=(document.getElementById("ad-desc").value||"").trim();
+  var valor=parseFloat(document.getElementById("ad-valor").value)||0;
+  var cat=document.getElementById("ad-cat").value;
+  var tipo=document.getElementById("ad-tipo").value;
+  var data=document.getElementById("ad-data").value;
+  if(!desc||!valor){toast("Preencha descricao e valor","ter");return;}
+  var btn=document.getElementById("btn-salvar-desp");if(btn){btn.textContent="Registrando...";btn.disabled=true;}
+  try{
+    var sessD=await sb.auth.getSession();
+    if(!sessD.data||!sessD.data.session){toast("Sessao expirada. Faca login novamente.","ter");go("s-login");return;}
+    var rd=await sb.from("despesas").insert({descricao:desc,valor:valor,categoria:cat,tipo:tipo,data:data||new Date().toISOString().split("T")[0],registrado_por:CURRENT_FUNC?CURRENT_FUNC.id:null});
+    if(rd.error){toast("Erro ao registrar: "+rd.error.message,"ter");return;}
+    closeOv("ov-add-desp");
+    ["ad-desc","ad-valor"].forEach(function(id){var e=document.getElementById(id);if(e)e.value="";});
+    toast("Despesa registrada!","tok");
+    ["ad-desc","ad-valor"].forEach(function(id){var e=document.getElementById(id);if(e)e.value="";});
+    closeOv("ov-add-desp");await carregarDespesas();
+  }catch(e){toast("Erro: "+(e.message||"").substring(0,40),"ter");}
+  finally{if(btn){btn.textContent="Registrar Despesa";btn.disabled=false;}}
+}
+
+async function excluirDespesa(id){
+  try{await sb.from("despesas").delete().eq("id",id);toast("Despesa removida","tok");await carregarDespesas();}
+  catch(e){toast("Erro ao excluir","ter");}
+}
+
+// ANOTACOES
+async function salvarNota(){
+  var tipo=document.getElementById("nota-tipo").value;
+  var ttl=(document.getElementById("nota-ttl-inp").value||"").trim();
+  var txt=(document.getElementById("nota-txt-inp").value||"").trim();
+  if(!ttl||!txt){toast("Preencha titulo e descricao","ter");return;}
+  var icons={problema:"🔴",sugestao:"💡",elogio:"⭐",outro:"💬"};
+  var nota={id:Date.now(),tipo:tipo,ttl:ttl,txt:txt,autor:CURRENT_FUNC?CURRENT_FUNC.nome:"Gerente",data:new Date().toLocaleDateString("pt-BR"),ic:icons[tipo]||"💬"};
+  NOTAS.unshift(nota);renderNotas(NOTAS);
+  closeOv("ov-nota-new");
+  document.getElementById("nota-ttl-inp").value="";
+  document.getElementById("nota-txt-inp").value="";
+  toast("Anotacao salva!","tok");
+  // Persistir no Supabase via configuracoes
+  if(CURRENT_FUNC&&sb){
+    try{
+      await sb.from("configuracoes").upsert({chave:"nota_"+nota.id,valor:JSON.stringify(nota),atualizado_em:new Date().toISOString()},{onConflict:"chave"});
+    }catch(e){console.log("Nota local apenas:",e.message);}
+  }
+}
+
+function renderNotas(lista){
+  var el=document.getElementById("notas-list");if(!el)return;
+  if(!lista.length){el.innerHTML="<div style='text-align:center;padding:40px;color:var(--mu)'><div style='font-size:36px;margin-bottom:10px'>&#x1F4DD;</div><div style='font-size:14px;font-weight:700'>Nenhuma anotacao</div></div>";return;}
+  var bgs={problema:"var(--rdb)",sugestao:"var(--amb)",elogio:"var(--gnb)",outro:"var(--skb)"};
+  var tcs={problema:"var(--rd)",sugestao:"var(--am)",elogio:"var(--gn)",outro:"var(--sk)"};
+  el.innerHTML=lista.map(function(n){
+    return "<div class='nota-item'><div style='display:flex;align-items:center;justify-content:space-between;margin-bottom:7px'><div style='font-size:13px;font-weight:700'>"+n.ic+" "+n.ttl+"</div><span class='nota-tag' style='background:"+(bgs[n.tipo]||"var(--skb)")+";color:"+(tcs[n.tipo]||"var(--sk)")+"'>"+n.tipo+"</span></div><div style='font-size:12px;color:var(--t2);line-height:1.5'>"+n.txt+"</div><div style='font-size:10px;color:var(--mu);margin-top:6px'>"+n.autor+" · "+n.data+"</div></div>";
+  }).join("");
+}
+
+function filtrarNotas(el,tipo){
+  document.querySelectorAll("#s-notas .ecat").forEach(function(e){e.classList.remove("on");});
+  el.classList.add("on");
+  renderNotas(tipo==="todos"?NOTAS:NOTAS.filter(function(n){return n.tipo===tipo;}));
+}
+
+// AVULSA
+function avn(d){if(d===","&&avRaw.indexOf(",")>=0)return;if(d!==","&&avRaw.replace(",","").length>=7)return;avRaw+=d;avRef();}
+function avd(){avRaw=avRaw.slice(0,-1);avRef();}
+function avP(){if(!avRaw)return 0;var n=parseFloat(avRaw.replace(",","."));return isNaN(n)?0:n;}
+function avRef(){
+  var p=avP();
+  var el=document.getElementById("avdv");el.textContent=p>0?"R$ "+p.toFixed(2).replace(".",","):"R$ 0,00";el.style.color=p>0?"var(--am)":"var(--tx)";
+  set("avqd",avQty);
+  var tot=p*avQty;set("avtot",tot>0?"R$ "+tot.toFixed(2).replace(".",","):"R$ 0,00");
+  var btn=document.getElementById("btnaav");if(btn){btn.disabled=p<=0;btn.style.opacity=p>0?"1":"0.5";}
+}
+function avq(d){avQty=Math.max(1,avQty+d);avRef();}
+function addAv(){
+  var p=avP();if(p<=0)return;
+  var desc=(document.getElementById("avdesc").value||"").trim()||"Produto avulso";
+  var commRate=COMM.j.on?COMM.j.pct/100:0;
+  cart.push({ic:"&#x1F3F7;&#xFE0F;",nm:desc,qty:avQty,pr:p,badges:[],comm:+(p*avQty*commRate).toFixed(2),av:true});
+  renderCart();updSt();closeOv("ov-av");avRaw="";avQty=1;
+  document.getElementById("avdesc").value="";
+  toast('"'+desc.substring(0,18)+'" adicionado!',"tok");
+}
+
+// REALTIME
+function iniciarRealtime(){
+  sb.channel("vendas-live").on("postgres_changes",{event:"INSERT",schema:"public",table:"vendas"},function(payload){
+    var v=payload.new;
+    var feed=document.getElementById("live-feed");
+    if(feed){
+      var div=document.createElement("div");
+      div.style.cssText="background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:12px;animation:fadeUp .3s ease";
+      div.innerHTML="<div style='display:flex;justify-content:space-between;margin-bottom:3px'><div style='font-size:12px;font-weight:700'>Nova venda</div><div style='font-size:14px;font-weight:800;color:var(--pk)'>R$ "+v.valor_liquido.toFixed(2).replace(".",",")+"</div></div><div style='font-size:11px;color:var(--mu)'>"+v.forma_pagamento+" · agora</div>";
+      var primEl=feed.querySelector("[data-empty]");if(primEl)primEl.remove();
+      feed.prepend(div);
+    }
+    var lt=document.getElementById("live-total");if(lt){var cur=parseFloat(lt.textContent.replace(/[^0-9,]/g,"").replace(",","."))||0;lt.textContent="R$ "+(cur+v.valor_liquido).toFixed(2).replace(".",",");}
+    var lq=document.getElementById("live-qtd");if(lq)lq.textContent=parseInt(lq.textContent||"0")+1;
+  }).subscribe();
+}
+
+// ADMIN TABS
+function swTab(t){
+  document.querySelectorAll(".atab").forEach(function(e){e.classList.remove("on");});
+  document.querySelectorAll(".bni").forEach(function(e){e.classList.remove("on");});
+  var tab=document.getElementById("tab-"+t),bn=document.getElementById("bn-"+t);
+  if(tab)tab.classList.add("on");if(bn)bn.classList.add("on");
+  document.querySelector(".admbody").scrollTop=0;
+  if(t==="equipe")carregarEquipe();
+  if(t==="prod"){carregarProdutosDB();setTimeout(function(){renderProdAdmin(PRODS_CACHE,"todos");},500);}
+  if(t==="desp")carregarDespesas();
+  if(t==="dash")carregarDashboardReal();
+}
+
+// UTILS
+function openOv(id){var el=document.getElementById(id);if(el)el.classList.add("on");}
+function closeOv(id){var el=document.getElementById(id);if(el)el.classList.remove("on");}
+function set(id,val){var e=document.getElementById(id);if(e)e.innerHTML=val;}
+function toast(msg,type){var el=document.getElementById("tst");el.textContent=msg;el.className="toast on "+(type||"tok");clearTimeout(toastT);toastT=setTimeout(function(){el.classList.remove("on");},3200);}
+function confFech(){closeOv("ov-fech");toast("Solicitacao enviada!","tok");}
+
+// INIT
+document.addEventListener("DOMContentLoaded",function(){
+  var da=document.getElementById("ad-data");if(da)da.value=new Date().toISOString().split("T")[0];
+});
+document.addEventListener("gesturestart",function(e){e.preventDefault();},{passive:false});
+document.addEventListener("touchmove",function(e){
+  if(e.target.tagName==="INPUT"||e.target.tagName==="TEXTAREA"||e.target.tagName==="SELECT")return;
+  if(e.target.closest(".sb,.phb,.admbody,.catscroll,.ks,.fperf-body"))return;
+  e.preventDefault();
+},{passive:false});
+</script>
+</body>
+</html>
