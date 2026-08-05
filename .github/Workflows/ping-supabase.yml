@@ -1,0 +1,16 @@
+name: Ping Supabase (evitar pausa por inatividade)
+
+on:
+  schedule:
+    # Roda toda segunda e quinta às 08:00 UTC (05:00 em Fortaleza).
+    # Bem abaixo do limite de 7 dias sem atividade que pausa o projeto.
+    - cron: "0 8 * * 1,4"
+  workflow_dispatch: {} # permite rodar manualmente pelo botão "Run workflow" no GitHub
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Chamar a API do Supabase
+        run: | curl -sS -o /dev/null -w "HTTP %{http_code}\n" \ "https://crflnclgpnjqlsyxlznx.supabase.co/rest/v1/categorias?select=id&limit=1" \ -H "apikey: ${SUPABASE_ANON_KEY}" \ -H "Authorization: Bearer ${SUPABASE_ANON_KEY}"         env:
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
