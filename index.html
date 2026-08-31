@@ -312,6 +312,9 @@ input,select,textarea{font-size:16px!important;-webkit-appearance:none;font-fami
       <div style="font-size:19px;font-weight:900;" id="pdv-greet">Ola!</div>
       <div style="font-size:12px;color:var(--mu);margin-top:2px;" id="pdv-sub"></div>
     </div>
+    <button onclick="abrirSeletorLoja()" style="display:flex;align-items:center;justify-content:space-between;gap:6px;padding:9px 12px;border-radius:12px;border:1.5px solid var(--bd);background:var(--s2);color:var(--tx);font-size:12px;font-weight:700;cursor:pointer;width:100%;margin:10px 0;">
+      <span>🏬 Loja ativa: <span id="pdv-loja-txt">-</span></span><span style="color:var(--mu);">Trocar ›</span>
+    </button>
     <div class="big2">
       <button class="bigbtn bsell" id="btn-ir-vender" onclick="irVender()">
         <div class="bi">🛒</div><div class="bl">VENDER</div><div class="bsm" id="vender-status-txt">Registrar venda</div>
@@ -367,6 +370,9 @@ input,select,textarea{font-size:16px!important;-webkit-appearance:none;font-fami
   <div class="tb"><div class="tb-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 44" width="90" height="22"><text x="2" y="32" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="34" font-weight="900" fill="#F06E8C">Clariza</text><text x="100" y="42" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="26" font-weight="900" fill="#2BBFB3">Kids</text><text x="110" y="16" font-size="12" fill="#F06E8C">♥</text></svg></div><div class="ava" style="background:linear-gradient(135deg,var(--am),#D97706);" id="diar-av" onclick="go('s-perfil')">D</div></div>
   <div class="phb">
     <div><div style="font-size:19px;font-weight:900;" id="diar-greet">Ola!</div><div style="font-size:12px;color:var(--mu);margin-top:2px;">Acesso temporario</div></div>
+    <button onclick="abrirSeletorLoja()" style="display:flex;align-items:center;justify-content:space-between;gap:6px;padding:9px 12px;border-radius:12px;border:1.5px solid var(--bd);background:var(--s2);color:var(--tx);font-size:12px;font-weight:700;cursor:pointer;width:100%;margin:10px 0;">
+      <span>🏬 Loja ativa: <span id="diar-loja-txt">-</span></span><span style="color:var(--mu);">Trocar ›</span>
+    </button>
     <div class="ac warn"><div class="aci">⏰</div><div><div class="act">Acesso Temporario</div><div class="acs" id="diar-expira">Token obrigatorio para toda venda</div></div></div>
     <button class="bigbtn bsell" style="width:100%;min-height:120px;" onclick="go('s-vender')">
       <div class="bi">🛒</div><div class="bl">VENDER</div><div class="bsm">Token da gerente obrigatorio</div>
@@ -385,6 +391,7 @@ input,select,textarea{font-size:16px!important;-webkit-appearance:none;font-fami
 <div id="s-vender" class="scr">
   <div class="tb"><div class="tb-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 44" width="90" height="22"><text x="2" y="32" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="34" font-weight="900" fill="#F06E8C">Clariza</text><text x="100" y="42" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="26" font-weight="900" fill="#2BBFB3">Kids</text><text x="110" y="16" font-size="12" fill="#F06E8C">♥</text></svg></div>
     <div style="flex:1;margin-left:8px;"><div style="font-size:14px;font-weight:900;">Vender</div></div>
+    <button onclick="abrirSeletorLoja()" style="padding:6px 10px;border-radius:10px;border:1.5px solid var(--bd);background:var(--s2);color:var(--tx);font-size:11px;font-weight:700;cursor:pointer;margin-right:6px;white-space:nowrap;">🏬 <span id="vender-loja-txt">-</span></button>
     <div id="cartind" style="background:var(--pk);color:#fff;padding:3px 10px;border-radius:16px;font-size:11px;font-weight:800;display:none;">0</div>
   </div>
   <div class="sb" id="vbody" style="padding-bottom:calc(80px + env(safe-area-inset-bottom,0px));">
@@ -534,6 +541,32 @@ input,select,textarea{font-size:16px!important;-webkit-appearance:none;font-fami
 </div>
 
 <!-- ═══════════════════════════════════════════ -->
+<!--  ESTOQUE GERAL (por loja)                    -->
+<!-- ═══════════════════════════════════════════ -->
+<div id="s-estoque-geral" class="scr">
+  <div class="tb"><div class="tb-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 44" width="90" height="22"><text x="2" y="32" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="34" font-weight="900" fill="#F06E8C">Clariza</text><text x="100" y="42" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="26" font-weight="900" fill="#2BBFB3">Kids</text><text x="110" y="16" font-size="12" fill="#F06E8C">♥</text></svg></div>
+    <div style="flex:1;margin-left:8px;font-size:14px;font-weight:900;">Estoque Geral</div>
+  </div>
+  <div class="sb">
+    <div style="padding:12px 14px 0;">
+      <div class="card" style="margin-bottom:12px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+          <div style="font-size:13px;font-weight:700;">🏬 Lojas</div>
+          <button onclick="abrirNovaLoja()" style="padding:6px 12px;border-radius:9px;border:none;background:linear-gradient(135deg,var(--tl),#0891B2);color:#fff;font-size:11px;font-weight:700;cursor:pointer;">+ Nova</button>
+        </div>
+        <div id="lojas-admin-list"><div style="font-size:12px;color:var(--mu);">Carregando...</div></div>
+      </div>
+      <div style="position:relative;margin-bottom:10px;">
+        <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:16px;">🔍</span>
+        <input style="width:100%;padding:12px 14px 12px 38px;background:var(--s2);border:1.5px solid var(--bd);border-radius:12px;color:var(--tx);font-size:16px;outline:none;" type="text" id="eg-search" placeholder="Buscar produto..." oninput="renderEstoqueGeral()">
+      </div>
+      <div id="estoque-geral-list"><div style="text-align:center;padding:30px;color:var(--mu);font-size:13px;">Carregando...</div></div>
+    </div>
+    <div style="height:80px;"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
 <!--  RECEBIMENTO DE MERCADORIA (base+variações)  -->
 <!-- ═══════════════════════════════════════════ -->
 <div id="s-receber" class="scr">
@@ -593,6 +626,7 @@ input,select,textarea{font-size:16px!important;-webkit-appearance:none;font-fami
       </div>
 
       <div class="card">
+        <div class="field"><label>Loja de destino *</label><select id="rec-loja"></select></div>
         <div class="field"><label>Fornecedor</label><input type="text" id="rec-fornecedor" placeholder="Ex: Confecção Silva"></div>
         <div class="field"><label>Nota Fiscal</label><input type="text" id="rec-nf" placeholder="Número da NF (opcional)"></div>
       </div>
@@ -704,6 +738,9 @@ input,select,textarea{font-size:16px!important;-webkit-appearance:none;font-fami
       <div style="font-size:19px;font-weight:900;" id="ger-greet">Ola, Regiane!</div>
       <div style="font-size:12px;color:var(--mu);margin-top:2px;" id="ger-sub">Supervisao ativa</div>
     </div>
+    <button onclick="abrirSeletorLoja()" style="display:flex;align-items:center;justify-content:space-between;gap:6px;padding:9px 12px;border-radius:12px;border:1.5px solid var(--bd);background:var(--s2);color:var(--tx);font-size:12px;font-weight:700;cursor:pointer;width:100%;margin:10px 0;">
+      <span>🏬 Loja ativa: <span id="ger-loja-txt">-</span></span><span style="color:var(--mu);">Trocar ›</span>
+    </button>
     <div class="big2">
       <button class="bigbtn bsell" onclick="go('s-vender')"><div class="bi">🛒</div><div class="bl">VENDER</div><div class="bsm">PDV completo</div></button>
       <button class="bigbtn blive" onclick="go('s-ao-vivo')"><div class="bi">📊</div><div class="bl">AO VIVO</div><div class="bsm">Vendas em tempo real</div></button>
@@ -723,6 +760,10 @@ input,select,textarea{font-size:16px!important;-webkit-appearance:none;font-fami
     <button class="bigbtn bstk" style="min-height:54px;border-radius:14px;flex-direction:row;gap:12px;padding:12px 16px;justify-content:flex-start;width:100%;" onclick="go('s-estoque')">
       <div class="bi" style="font-size:22px;">📦</div>
       <div style="text-align:left;"><div class="bl" style="font-size:14px;">ESTOQUE</div><div class="bsm">Ver + cadastrar produtos</div></div>
+    </button>
+    <button class="bigbtn" style="min-height:54px;border-radius:14px;flex-direction:row;gap:12px;padding:12px 16px;justify-content:flex-start;width:100%;background:linear-gradient(155deg,#6366F1,#8B5CF6);" onclick="go('s-estoque-geral')">
+      <div class="bi" style="font-size:22px;">🏬</div>
+      <div style="text-align:left;"><div class="bl" style="font-size:14px;">ESTOQUE GERAL</div><div class="bsm">Transferir entre lojas</div></div>
     </button>
     <div class="card">
       <div class="row"><span class="rl">Comissoes hoje</span><span class="rv" style="color:var(--pk);" id="ger-comm">R$ 0,00</span></div>
@@ -893,7 +934,10 @@ input,select,textarea{font-size:16px!important;-webkit-appearance:none;font-fami
     <div class="atab" id="tab-prod">
       <div style="padding:12px 14px 6px;display:flex;align-items:center;justify-content:space-between;">
         <div><div style="font-size:11px;color:var(--mu);">Catalogo</div><div style="font-size:20px;font-weight:900;">Produtos</div></div>
-        <button onclick="limparFormProd();openOv('ov-add-prod')" style="padding:8px 14px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--tl),#0891B2);color:#fff;font-size:12px;font-weight:700;cursor:pointer;">+ Produto</button>
+        <div style="display:flex;gap:6px;">
+          <button onclick="go('s-estoque-geral')" style="padding:8px 12px;border-radius:10px;border:none;background:var(--s3);color:var(--tx);font-size:12px;font-weight:700;cursor:pointer;">🏬 Lojas</button>
+          <button onclick="limparFormProd();openOv('ov-add-prod')" style="padding:8px 14px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--tl),#0891B2);color:#fff;font-size:12px;font-weight:700;cursor:pointer;">+ Produto</button>
+        </div>
       </div>
       <div style="padding:0 14px;">
         <div style="position:relative;margin-bottom:8px;">
@@ -1107,6 +1151,7 @@ input,select,textarea{font-size:16px!important;-webkit-appearance:none;font-fami
     <div style="font-size:16px;font-weight:800;text-align:center;" id="est-nm">-</div>
     <div style="font-size:10px;color:var(--mu);text-align:center;margin:3px 0 14px;" id="est-sk">-</div>
     <div class="row"><span class="rl">Estoque atual</span><span class="rv" id="est-qt">-</span></div>
+    <div id="est-lojas-breakdown" style="margin:2px 0 4px;"></div>
     <div class="row" id="est-cu-row"><span class="rl">Custo</span><span class="rv" id="est-cu">-</span></div>
     <div class="row"><span class="rl">Preco Credito</span><span class="rv" id="est-pr">-</span></div>
     <div class="row"><span class="rl">Preco Pix</span><span class="rv" style="color:var(--sk);" id="est-px">-</span></div>
@@ -1116,6 +1161,7 @@ input,select,textarea{font-size:16px!important;-webkit-appearance:none;font-fami
         <button class="bgn" style="padding:12px;" onclick="editarProduto()">✏️ Editar</button>
         <button style="padding:12px;border-radius:13px;border:none;background:var(--rdb);color:var(--rd);font-size:14px;font-weight:800;cursor:pointer;" onclick="confirmarExcluirProd()">🗑️ Excluir</button>
       </div>
+      <button class="bs2" style="margin-top:0;margin-bottom:8px;" onclick="abrirTransferencia()">🔁 Transferir entre lojas</button>
       <button class="bs2" style="margin-top:0;" onclick="gerarBarcode()">📋 Gerar Codigo de Barras</button>
     </div>
     <button class="bcn" onclick="closeOv('ov-est')">Fechar</button>
@@ -1145,10 +1191,12 @@ input,select,textarea{font-size:16px!important;-webkit-appearance:none;font-fami
       <div class="field"><label>Preco Venda (R$) *</label><input type="number" id="ap-preco" placeholder="0,00" min="0" step="0.01" inputmode="decimal"></div>
       <div class="field"><label>Custo (R$)</label><input type="number" id="ap-custo" placeholder="0,00" min="0" step="0.01" inputmode="decimal"></div>
     </div>
+    <div class="field" id="ap-loja-wrap"><label>Loja de destino (estoque inicial)</label><select id="ap-loja"></select></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-      <div class="field"><label>Estoque Atual</label><input type="number" id="ap-estoque" placeholder="0" min="0" inputmode="numeric"></div>
+      <div class="field"><label id="ap-estoque-label">Estoque Inicial</label><input type="number" id="ap-estoque" placeholder="0" min="0" inputmode="numeric"></div>
       <div class="field"><label>Estoque Minimo</label><input type="number" id="ap-minimo" value="3" min="0" inputmode="numeric"></div>
     </div>
+    <div id="ap-estoque-info" style="display:none;font-size:11px;color:var(--mu);background:var(--s3);border-radius:10px;padding:10px 12px;margin:-4px 0 12px;">ℹ️ O estoque total é a soma de todas as lojas. Para ajustar, use "🔁 Transferir" no detalhe do produto ou o menu Estoque Geral.</div>
     <div class="field"><label>Classificacao ABC</label>
       <select id="ap-abc"><option value="A">A — Alta rotatividade</option><option value="B" selected>B — Media rotatividade</option><option value="C">C — Baixa rotatividade</option></select>
     </div>
@@ -1166,6 +1214,39 @@ input,select,textarea{font-size:16px!important;-webkit-appearance:none;font-fami
     </div>
     <button class="bp" id="btn-salvar-prod" onclick="salvarProduto()">💾 Salvar Produto</button>
     <button class="bcn" onclick="closeOv('ov-add-prod');limparFormProd();">Cancelar</button>
+  </div>
+</div>
+
+<!-- SELETOR DE LOJA ATIVA -->
+<div class="ov" id="ov-loja">
+  <div class="ob">
+    <div class="oh"></div><div class="ot">🏬 Escolher loja ativa</div>
+    <div id="loja-sel-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px;"></div>
+    <button class="bcn" onclick="closeOv('ov-loja')">Fechar</button>
+  </div>
+</div>
+
+<!-- TRANSFERIR ESTOQUE ENTRE LOJAS -->
+<div class="ov" id="ov-transferir">
+  <div class="ob">
+    <div class="oh"></div><div class="ot">🔁 Transferir Estoque</div>
+    <div style="font-size:12px;color:var(--mu);text-align:center;margin-bottom:12px;" id="transf-prod-nome">-</div>
+    <div class="field"><label>Loja de origem</label><select id="transf-origem" onchange="atualizarTransfMax()"></select></div>
+    <div class="field"><label>Loja de destino</label><select id="transf-destino" onchange="atualizarTransfMax()"></select></div>
+    <div class="field"><label>Quantidade</label><input type="number" id="transf-qtd" min="1" value="1" inputmode="numeric"></div>
+    <div style="font-size:11px;color:var(--mu);margin-bottom:12px;" id="transf-disponivel"></div>
+    <button class="bp" id="btn-transferir" onclick="confirmarTransferencia()">🔁 Transferir</button>
+    <button class="bcn" onclick="closeOv('ov-transferir')">Cancelar</button>
+  </div>
+</div>
+
+<!-- NOVA LOJA -->
+<div class="ov" id="ov-add-loja">
+  <div class="ob">
+    <div class="oh"></div><div class="ot">🏬 Nova Loja</div>
+    <div class="field"><label>Nome da loja *</label><input type="text" id="al-nome" placeholder="Ex: Loja Shopping"></div>
+    <button class="bp" id="btn-add-loja" onclick="salvarLoja()">💾 Salvar</button>
+    <button class="bcn" onclick="closeOv('ov-add-loja')">Cancelar</button>
   </div>
 </div>
 
@@ -1651,6 +1732,7 @@ var currentToken=null, tokTimer=null, pinBuf="", pinFails=0, pinLocked=false;
 var PROD_EDIT_ID=null, SCAN_MODE="venda", scanStream=null, scanInterval=null;
 var filtCatAtual="", filtDespAtual="";
 var HOME_MAP={v:"s-pdv-home",g:"s-ger-home",d:"s-diar-home",a:"s-admin"};
+var LOJAS_CACHE=[], LOJA_ATIVA_ID=null, LOJA_ATIVA_NOME="", ESTOQUE_LOJA_ATIVA={}, ESTOQUE_GERAL_CACHE={}, TRANSF_ESTOQUE_LOJAS={};
 var CONFIG_CACHE={}; // parametros editaveis (das, limite_mei, meta_margem, alerta_dinheiro, aluguel_pranchao, aluguel_fantasia, manutencao, sistema)
 
 // ─── NAVEGAÇÃO ────────────────────────────────────────────────
@@ -1672,7 +1754,8 @@ function go(id) {
   if (id==="s-fechamentos") carregarFechamentosPendentes();
   if (id==="s-estoque" || id==="s-vender") { carregarCategorias(); renderCategoriasUI(); }
   if (id==="s-estoque") { var esEl=document.getElementById("est-search"); if(esEl) esEl.value=""; estoqueMostrarGeneros(); }
-  var comBbar = ["s-estoque","s-minhas-vendas","s-token","s-ao-vivo","s-perfil","s-notas","s-fechamentos","s-receber"];
+  if (id==="s-estoque-geral") { var egEl=document.getElementById("eg-search"); if(egEl) egEl.value=""; carregarEstoqueGeral(); }
+  var comBbar = ["s-estoque","s-estoque-geral","s-minhas-vendas","s-token","s-ao-vivo","s-perfil","s-notas","s-fechamentos","s-receber"];
   if (id==="s-vender" || id==="s-success") {
     if (ROLE==="v"||ROLE==="d") { if (bs) bs.classList.add("on"); }
     else { if (bi) bi.classList.add("on"); }
@@ -1689,6 +1772,7 @@ function goBack() {
   var map = {
     "s-vender": HOME_MAP[ROLE],
     "s-estoque": HOME_MAP[ROLE],
+    "s-estoque-geral": HOME_MAP[ROLE],
     "s-minhas-vendas": HOME_MAP[ROLE],
     "s-success": HOME_MAP[ROLE],
     "s-token": "s-ger-home",
@@ -1751,6 +1835,8 @@ async function afterLogin(user) {
   ["pdv-sub","ger-sub","dash-data"].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=ds;});
   var da=document.getElementById("ad-data"); if(da) da.value=now.toISOString().split("T")[0];
   await carregarConfiguracoes();
+  await carregarLojas();
+  await carregarEstoqueLojaAtiva();
   await carregarCategorias();
   await carregarSubcategorias();
   await carregarProdutosDB();
@@ -1769,6 +1855,7 @@ async function fazerLogout() {
   closeOv("ov-logout");
   await sb.auth.signOut();
   CURRENT_USER=null; CURRENT_FUNC=null; ROLE=""; PD={}; cart=[];
+  LOJAS_CACHE=[]; LOJA_ATIVA_ID=null; LOJA_ATIVA_NOME=""; ESTOQUE_LOJA_ATIVA={};
   renderCart(); updSt(); go("s-login"); toast("Sessao encerrada","tok");
 }
 
@@ -1974,7 +2061,7 @@ async function carregarProdutosDB() {
     PRODS_CACHE.forEach(function(p) {
       if (p.e_base) return; // produto-base nao aparece para venda direta
       var k = (p.codigo||p.id.substring(0,8)).toUpperCase().replace(/[^A-Z0-9]/g,"");
-      PD[k] = {nm:p.nome,sk:p.codigo||k,pr:p.preco_credito,st:p.estoque_atual,ic:catIcon(p.categoria),abc:p.classificacao_abc||"B",id:p.id,custo:p.preco_custo||0,cat:p.categoria};
+      PD[k] = {nm:p.nome,sk:p.codigo||k,pr:p.preco_credito,st:p.estoque_atual,stl:ESTOQUE_LOJA_ATIVA[p.id]||0,ic:catIcon(p.categoria),abc:p.classificacao_abc||"B",id:p.id,custo:p.preco_custo||0,cat:p.categoria};
     });
     renderEstoque(PRODS_CACHE);
     if (ROLE==="a") renderProdAdmin(PRODS_CACHE);
@@ -1983,6 +2070,188 @@ async function carregarProdutosDB() {
     if (ae&&baixos.length) { ae.style.display="flex"; if(at)at.textContent=baixos.map(function(p){return p.nome+"("+p.estoque_atual+")";}).join(" · "); }
     else if (ae) ae.style.display="none";
   } catch(e) { console.error("carregarProdutos:",e); }
+}
+
+// ─── LOJAS / ESTOQUE POR LOJA ──────────────────────────────────
+async function carregarLojas() {
+  var r = await sb.from("lojas").select("*").eq("ativo",true).order("criado_em");
+  if (r.error) { console.error("Lojas:",r.error.message); return; }
+  LOJAS_CACHE = r.data||[];
+  var salva = CURRENT_FUNC ? localStorage.getItem("MAIA_LOJA_ATIVA_"+CURRENT_FUNC.id) : null;
+  var achada = LOJAS_CACHE.find(function(l){return l.id===salva;})
+    || LOJAS_CACHE.find(function(l){return l.id===(CURRENT_FUNC&&CURRENT_FUNC.loja_id);})
+    || LOJAS_CACHE[0];
+  if (achada) { LOJA_ATIVA_ID=achada.id; LOJA_ATIVA_NOME=achada.nome; }
+  atualizarPillLoja();
+}
+
+async function carregarEstoqueLojaAtiva() {
+  ESTOQUE_LOJA_ATIVA = {};
+  if (!LOJA_ATIVA_ID) return;
+  var r = await sb.from("estoque_lojas").select("produto_id,quantidade").eq("loja_id",LOJA_ATIVA_ID);
+  if (r.error) { console.error("EstoqueLoja:",r.error.message); return; }
+  (r.data||[]).forEach(function(e){ ESTOQUE_LOJA_ATIVA[e.produto_id]=e.quantidade; });
+}
+
+function atualizarPillLoja() {
+  ["pdv-loja-txt","ger-loja-txt","diar-loja-txt","vender-loja-txt"].forEach(function(id){
+    var e=document.getElementById(id); if(e) e.textContent = LOJA_ATIVA_NOME||"Selecionar";
+  });
+}
+
+function abrirSeletorLoja() {
+  var el = document.getElementById("loja-sel-list");
+  if (el) {
+    if (!LOJAS_CACHE.length) el.innerHTML = "<div style='font-size:12px;color:var(--mu);text-align:center;padding:10px;'>Nenhuma loja cadastrada</div>";
+    else el.innerHTML = LOJAS_CACHE.map(function(l) {
+      var on = l.id===LOJA_ATIVA_ID;
+      return "<button onclick=\"selecionarLojaAtiva('"+l.id+"')\" style=\"padding:14px;border-radius:12px;border:1.5px solid "+(on?"var(--tl)":"var(--bd)")+";background:"+(on?"var(--s3)":"var(--s2)")+";color:var(--tx);font-size:14px;font-weight:700;cursor:pointer;text-align:left;display:flex;justify-content:space-between;align-items:center;width:100%;\">"+l.nome+(on?" <span style='color:var(--tl);'>✓</span>":"")+"</button>";
+    }).join("");
+  }
+  openOv("ov-loja");
+}
+
+async function selecionarLojaAtiva(id) {
+  var l = LOJAS_CACHE.find(function(x){return x.id===id;}); if(!l) return;
+  LOJA_ATIVA_ID = l.id; LOJA_ATIVA_NOME = l.nome;
+  if (CURRENT_FUNC) localStorage.setItem("MAIA_LOJA_ATIVA_"+CURRENT_FUNC.id, id);
+  atualizarPillLoja();
+  closeOv("ov-loja");
+  toast("Loja ativa: "+l.nome,"tok");
+  await carregarEstoqueLojaAtiva();
+  await carregarProdutosDB();
+}
+
+function abrirNovaLoja() { var e=document.getElementById("al-nome"); if(e) e.value=""; openOv("ov-add-loja"); }
+
+async function salvarLoja() {
+  var nome = (document.getElementById("al-nome").value||"").trim();
+  if (!nome) { toast("Informe o nome da loja","ter"); return; }
+  var btn=document.getElementById("btn-add-loja");
+  if (btn) { btn.innerHTML="<span class='spinner'></span>Salvando..."; btn.disabled=true; }
+  try {
+    var r = await sb.from("lojas").insert({nome:nome});
+    if (r.error) throw new Error(r.error.message);
+    toast("Loja cadastrada!","tok");
+    closeOv("ov-add-loja");
+    await carregarLojas();
+    renderLojasAdmin();
+    if (document.getElementById("s-estoque-geral").classList.contains("on")) await carregarEstoqueGeral();
+  } catch(e) {
+    toast("Erro: "+e.message.substring(0,60),"ter");
+  } finally {
+    if (btn) { btn.innerHTML="💾 Salvar"; btn.disabled=false; }
+  }
+}
+
+function renderLojasAdmin() {
+  var el = document.getElementById("lojas-admin-list"); if(!el) return;
+  if (!LOJAS_CACHE.length) { el.innerHTML="<div style='font-size:12px;color:var(--mu);'>Nenhuma loja cadastrada</div>"; return; }
+  el.innerHTML = LOJAS_CACHE.map(function(l){
+    return "<div class='row'><span class='rl'>"+l.nome+"</span><span class='rv'>"+(l.id===LOJA_ATIVA_ID?"🟢 Ativa":"")+"</span></div>";
+  }).join("");
+}
+
+async function carregarEstoqueGeral() {
+  var r = await sb.from("estoque_lojas").select("produto_id,loja_id,quantidade");
+  ESTOQUE_GERAL_CACHE = {};
+  if (!r.error) {
+    (r.data||[]).forEach(function(e){
+      if (!ESTOQUE_GERAL_CACHE[e.produto_id]) ESTOQUE_GERAL_CACHE[e.produto_id]={};
+      ESTOQUE_GERAL_CACHE[e.produto_id][e.loja_id]=e.quantidade;
+    });
+  }
+  renderLojasAdmin();
+  renderEstoqueGeral();
+}
+
+function renderEstoqueGeral() {
+  var el = document.getElementById("estoque-geral-list"); if(!el) return;
+  var buscaEl = document.getElementById("eg-search");
+  var q = normStr(buscaEl?buscaEl.value:"");
+  var lista = PRODS_CACHE.filter(function(p){ return !p.e_base && (!q || normStr(p.nome).indexOf(q)>=0 || normStr(p.codigo||"").indexOf(q)>=0); });
+  if (!lista.length) { el.innerHTML="<div style='text-align:center;padding:30px;color:var(--mu);font-size:13px;'>Nenhum produto encontrado</div>"; return; }
+  el.innerHTML = lista.map(function(p) {
+    var porLoja = ESTOQUE_GERAL_CACHE[p.id]||{};
+    var cols = LOJAS_CACHE.map(function(l){
+      return "<div style='text-align:center;flex:1;'><div style='font-size:9px;color:var(--mu);'>"+l.nome+"</div><div style='font-size:14px;font-weight:800;'>"+(porLoja[l.id]||0)+"</div></div>";
+    }).join("");
+    return "<div style='background:var(--s2);border:1px solid var(--bd);border-radius:13px;padding:12px;margin-bottom:7px;'>"+
+      "<div style='display:flex;align-items:center;gap:10px;margin-bottom:10px;'>"+
+      "<div class='eic' style='width:34px;height:34px;font-size:15px;'>"+catIcon(p.categoria)+"</div>"+
+      "<div style='flex:1;'><div style='font-size:13px;font-weight:700;'>"+p.nome+"</div><div style='font-size:10px;color:var(--mu);'>Total: "+p.estoque_atual+" un.</div></div>"+
+      "<button onclick=\"abrirTransferenciaFromGeral('"+p.id+"')\" style='padding:7px 10px;border-radius:9px;border:none;background:var(--skb);color:var(--sk);font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;'>🔁 Transferir</button>"+
+      "</div>"+
+      "<div style='display:flex;gap:6px;border-top:1px solid var(--bd);padding-top:8px;'>"+cols+"</div>"+
+      "</div>";
+  }).join("");
+}
+
+async function renderEstLojasBreakdown(prodId) {
+  var el = document.getElementById("est-lojas-breakdown"); if(!el) return;
+  el.innerHTML = "<div style='font-size:11px;color:var(--mu);padding:6px 0;'>Carregando estoque por loja...</div>";
+  var r = await sb.from("estoque_lojas").select("loja_id,quantidade").eq("produto_id",prodId);
+  if (r.error) { el.innerHTML=""; return; }
+  el.innerHTML = LOJAS_CACHE.map(function(l) {
+    var reg = (r.data||[]).find(function(x){return x.loja_id===l.id;});
+    return "<div class='row'><span class='rl'>"+l.nome+"</span><span class='rv'>"+(reg?reg.quantidade:0)+" un.</span></div>";
+  }).join("");
+}
+
+function abrirTransferenciaFromGeral(prodId) { PROD_EDIT_ID = prodId; abrirTransferencia(); }
+
+async function abrirTransferencia() {
+  var p = PRODS_CACHE.find(function(x){return x.id===PROD_EDIT_ID;}); if(!p) return;
+  if (LOJAS_CACHE.length<2) { toast("Cadastre pelo menos 2 lojas para transferir estoque","ter"); return; }
+  s("transf-prod-nome", p.nome);
+  var r = await sb.from("estoque_lojas").select("loja_id,quantidade").eq("produto_id",PROD_EDIT_ID);
+  TRANSF_ESTOQUE_LOJAS = {};
+  (r.data||[]).forEach(function(e){ TRANSF_ESTOQUE_LOJAS[e.loja_id]=e.quantidade; });
+  var origemSel = document.getElementById("transf-origem"), destinoSel = document.getElementById("transf-destino");
+  origemSel.innerHTML = LOJAS_CACHE.map(function(l){ return "<option value='"+l.id+"'>"+l.nome+" ("+(TRANSF_ESTOQUE_LOJAS[l.id]||0)+" un.)</option>"; }).join("");
+  destinoSel.innerHTML = LOJAS_CACHE.map(function(l){ return "<option value='"+l.id+"'>"+l.nome+"</option>"; }).join("");
+  var outraLoja = LOJAS_CACHE.find(function(l){return l.id!==origemSel.value;});
+  if (outraLoja) destinoSel.value = outraLoja.id;
+  document.getElementById("transf-qtd").value = "1";
+  closeOv("ov-est");
+  atualizarTransfMax();
+  openOv("ov-transferir");
+}
+
+function atualizarTransfMax() {
+  var origemSel = document.getElementById("transf-origem"), destinoSel = document.getElementById("transf-destino");
+  if (destinoSel.value===origemSel.value) {
+    var outraLoja = LOJAS_CACHE.find(function(l){return l.id!==origemSel.value;});
+    if (outraLoja) destinoSel.value = outraLoja.id;
+  }
+  var disp = TRANSF_ESTOQUE_LOJAS[origemSel.value]||0;
+  s("transf-disponivel","Disponível na origem: "+disp+" un.");
+  var qtdEl = document.getElementById("transf-qtd"); if (qtdEl) qtdEl.max = disp;
+}
+
+async function confirmarTransferencia() {
+  var origemId = document.getElementById("transf-origem").value;
+  var destinoId = document.getElementById("transf-destino").value;
+  var qtd = parseInt(document.getElementById("transf-qtd").value)||0;
+  if (origemId===destinoId) { toast("Escolha lojas diferentes","ter"); return; }
+  if (qtd<=0) { toast("Quantidade invalida","ter"); return; }
+  var disp = TRANSF_ESTOQUE_LOJAS[origemId]||0;
+  if (qtd>disp) { toast("Estoque insuficiente na origem ("+disp+")","ter"); return; }
+  var btn=document.getElementById("btn-transferir");
+  if (btn) { btn.innerHTML="<span class='spinner'></span>Transferindo..."; btn.disabled=true; }
+  try {
+    var r = await sb.rpc("transferir_estoque",{p_produto_id:PROD_EDIT_ID, p_loja_origem_id:origemId, p_loja_destino_id:destinoId, p_quantidade:qtd});
+    if (r.error) throw new Error(r.error.message);
+    toast("Estoque transferido!","tok");
+    closeOv("ov-transferir");
+    await carregarProdutosDB();
+    await carregarEstoqueLojaAtiva();
+    if (document.getElementById("s-estoque-geral").classList.contains("on")) await carregarEstoqueGeral();
+  } catch(e) {
+    toast("Erro: "+e.message.substring(0,80),"ter");
+  } finally {
+    if (btn) { btn.innerHTML="🔁 Transferir"; btn.disabled=false; }
+  }
 }
 
 // ─── NAVEGAÇÃO VISUAL: Gênero → Subcategoria → Lista ──────────
@@ -2119,13 +2388,14 @@ function openEstModal(prodId) {
   PROD_EDIT_ID = prodId;
   var pixP = pixPrice(p.preco_credito,p.categoria,p.id);
   s("est-ic",catIcon(p.categoria)); s("est-nm",p.nome); s("est-sk",p.codigo||"-");
-  s("est-qt",p.estoque_atual+" unidades"); s("est-cu","R$ "+(p.preco_custo||0).toFixed(2).replace(".",","));
+  s("est-qt",p.estoque_atual+" unidades (total)"); s("est-cu","R$ "+(p.preco_custo||0).toFixed(2).replace(".",","));
   s("est-pr","R$ "+p.preco_credito.toFixed(2).replace(".",","));
   s("est-px",pixP<p.preco_credito?"R$ "+pixP.toFixed(2).replace(".",",")+" (com desconto)":"Sem desconto automatico");
   s("est-abc","Categoria "+p.classificacao_abc);
   var custoRow = document.getElementById("est-cu-row");
   if (custoRow) custoRow.style.display = (ROLE==="a"||ROLE==="g") ? "flex" : "none";
   openOv("ov-est");
+  renderEstLojasBreakdown(prodId);
 }
 
 async function salvarProduto() {
@@ -2136,27 +2406,36 @@ async function salvarProduto() {
   var preco=parseFloat(document.getElementById("ap-preco").value)||0;
   var custo=parseFloat(document.getElementById("ap-custo").value)||0;
   var estoque=parseInt(document.getElementById("ap-estoque").value)||0;
+  var lojaDestino=(document.getElementById("ap-loja")||{}).value||"";
   var minimo=parseInt(document.getElementById("ap-minimo").value)||3;
   var abc=document.getElementById("ap-abc").value;
   var foto=(document.getElementById("ap-foto")||{}).value||"";
   if (!nome||!preco) { toast("Nome e preco sao obrigatorios","ter"); return; }
   if (!genero||!subcat) { toast("Escolha genero e subcategoria","ter"); return; }
+  if (!PROD_EDIT_ID && estoque>0 && !lojaDestino) { toast("Escolha a loja de destino do estoque","ter"); return; }
   var btn=document.getElementById("btn-salvar-prod");
   if (btn) { btn.innerHTML="<span class='spinner'></span>Salvando..."; btn.disabled=true; }
   try {
-    var dados={nome:nome,codigo:cod||null,categoria:genero,subcategoria:subcat,preco_credito:preco,preco_custo:custo,estoque_atual:estoque,estoque_minimo:minimo,classificacao_abc:abc,ativo:true,foto_url:foto||null,atualizado_em:new Date().toISOString()};
+    var dados={nome:nome,codigo:cod||null,categoria:genero,subcategoria:subcat,preco_credito:preco,preco_custo:custo,estoque_minimo:minimo,classificacao_abc:abc,ativo:true,foto_url:foto||null,atualizado_em:new Date().toISOString()};
     var r;
     if (PROD_EDIT_ID) {
       r = await sb.from("produtos").update(dados).eq("id",PROD_EDIT_ID);
       if (r.error) throw new Error(r.error.message);
       toast("Produto atualizado!","tok");
     } else {
-      r = await sb.from("produtos").insert(dados);
+      dados.estoque_atual = 0; // recalculado automaticamente a partir do estoque por loja
+      r = await sb.from("produtos").insert(dados).select().single();
       if (r.error) throw new Error(r.error.message);
+      if (estoque>0 && lojaDestino) {
+        var re = await sb.from("estoque_lojas").upsert({produto_id:r.data.id, loja_id:lojaDestino, quantidade:estoque}, {onConflict:"produto_id,loja_id"});
+        if (re.error) throw new Error(re.error.message);
+        await sb.from("entradas_estoque").insert({produto_id:r.data.id, loja_id:lojaDestino, quantidade:estoque, custo_unitario:custo, observacao:"Estoque inicial do cadastro", registrado_por:CURRENT_FUNC.id});
+      }
       toast("Produto cadastrado!","tok");
     }
     closeOv("ov-add-prod"); limparFormProd();
     await carregarProdutosDB();
+    await carregarEstoqueLojaAtiva();
   } catch(e) {
     toast("Erro: "+e.message.substring(0,60),"ter");
   } finally {
@@ -2171,6 +2450,12 @@ function limparFormProd() {
   document.getElementById("ap-abc").value="B";
   popularGeneroSelect("ap");
   atualizarSubcategoriasSelect("ap");
+  var lojaSel = document.getElementById("ap-loja");
+  if (lojaSel) lojaSel.innerHTML = LOJAS_CACHE.map(function(l){return "<option value='"+l.id+"'"+(l.id===LOJA_ATIVA_ID?" selected":"")+">"+l.nome+"</option>";}).join("");
+  var lojaWrap = document.getElementById("ap-loja-wrap"); if (lojaWrap) lojaWrap.style.display="block";
+  var estEl = document.getElementById("ap-estoque"); if (estEl) estEl.disabled=false;
+  s("ap-estoque-label","Estoque Inicial");
+  var info = document.getElementById("ap-estoque-info"); if (info) info.style.display="none";
   var prev=document.getElementById("ap-foto-preview"); if(prev){prev.style.display="none";prev.src="";}
   var ph=document.getElementById("ap-foto-placeholder"); if(ph){ph.style.display="flex";ph.innerHTML="Nenhuma foto selecionada";}
   s("add-prod-ttl","📦 Novo Produto");
@@ -2188,7 +2473,11 @@ function editarProduto() {
   if (p.subcategoria) document.getElementById("ap-subcat").value=p.subcategoria;
   document.getElementById("ap-preco").value=p.preco_credito;
   document.getElementById("ap-custo").value=p.preco_custo||"";
-  document.getElementById("ap-estoque").value=p.estoque_atual;
+  var lojaWrap = document.getElementById("ap-loja-wrap"); if (lojaWrap) lojaWrap.style.display="none";
+  var estEl = document.getElementById("ap-estoque");
+  if (estEl) { estEl.value=p.estoque_atual; estEl.disabled=true; }
+  s("ap-estoque-label","Estoque Total (todas as lojas)");
+  var info = document.getElementById("ap-estoque-info"); if (info) info.style.display="block";
   document.getElementById("ap-minimo").value=p.estoque_minimo||3;
   document.getElementById("ap-abc").value=p.classificacao_abc||"B";
   var fotoEl=document.getElementById("ap-foto"); if(fotoEl) fotoEl.value=p.foto_url||"";
@@ -2632,8 +2921,9 @@ function showProd(key) {
   qty = 1;
   s("qnum","1");
   s("pr-ic",p.ic); s("pr-nm",p.nm); s("pr-sk",p.sk);
-  s("pr-st", p.st>0 ? p.st+" em estoque" : "SEM ESTOQUE");
-  document.getElementById("pr-st").style.color = p.st>0 ? "var(--tl)" : "var(--rd)";
+  var stLoja = p.stl||0;
+  s("pr-st", stLoja>0 ? stLoja+" em estoque ("+(LOJA_ATIVA_NOME||"loja ativa")+") · "+p.st+" no total" : "SEM ESTOQUE em "+(LOJA_ATIVA_NOME||"loja ativa"));
+  document.getElementById("pr-st").style.color = stLoja>0 ? "var(--tl)" : "var(--rd)";
   s("pr-pr","R$ "+p.pr.toFixed(2).replace(".",","));
   var pixEl = document.getElementById("pr-pix");
   var pxVal = pixPrice(p.pr, p.cat, p.id);
@@ -2684,7 +2974,8 @@ function cq(delta) {
 function addC() {
   if (!curProd) return;
   var p = PD[curProd];
-  if (p.st < qty) { toast("Estoque insuficiente ("+p.st+" disponivel)","ter"); return; }
+  if (!LOJA_ATIVA_ID) { toast("Selecione a loja ativa antes de vender","ter"); return; }
+  if ((p.stl||0) < qty) { toast("Estoque insuficiente na loja ativa ("+(p.stl||0)+" disponivel)","ter"); return; }
   var desconto = parseFloat(document.getElementById("dscinp").value)||0;
   var tokenCodigo = (document.getElementById("tok-inp").value||"").trim();
   if (desconto>0 && !tokenCodigo) { toast("Desconto extra requer token da gerente","ter"); return; }
@@ -2997,10 +3288,12 @@ document.addEventListener("input", function(e){ if (e.target && e.target.id==="a
 // ─── CONFIRMAR VENDA — via RPC atomica registrar_venda ─────────
 async function confVenda() {
   if (!cart.length) return;
+  if (!LOJA_ATIVA_ID) { toast("Selecione a loja ativa antes de vender","ter"); return; }
   var metodoGeral = document.querySelector("#ov-pay .pmini.on");
   var metodo = metodoGeral ? (metodoGeral.getAttribute("onclick")||"").match(/'([a-z]+)'/)[1] : "cred";
   var payload = {
     metodo_pagamento: metodo,
+    loja_id: LOJA_ATIVA_ID,
     itens: cart.map(function(item) {
       return {
         produto_id: item.key ? (PD[item.key] ? PD[item.key].id : null) : null,
@@ -3027,6 +3320,7 @@ async function confVenda() {
     cart = []; renderCart(); updSt();
     closeOv("ov-pay");
     go("s-success");
+    await carregarEstoqueLojaAtiva();
     await carregarProdutosDB();
     await carregarContadoresHome();
   } catch(e) {
@@ -4160,6 +4454,8 @@ function abrirRecebimento() {
   var ph=document.getElementById("rb-foto-placeholder"); if(ph){ph.style.display="flex";ph.innerHTML="Nenhuma foto selecionada";}
   document.getElementById("rec-fornecedor").value = "";
   document.getElementById("rec-nf").value = "";
+  var lojaSel = document.getElementById("rec-loja");
+  if (lojaSel) lojaSel.innerHTML = LOJAS_CACHE.map(function(l){return "<option value='"+l.id+"'"+(l.id===LOJA_ATIVA_ID?" selected":"")+">"+l.nome+"</option>";}).join("");
   document.getElementById("rec-variacoes-list").innerHTML = "";
   addLinhaVariacao();
   atualizarTotalRecebimento();
@@ -4247,6 +4543,8 @@ async function salvarRecebimento() {
   if (!REC_BASE_ID && !REC_BASE_NOVO) { toast("Selecione ou crie um produto base","ter"); return; }
   var variacoesValidas = REC_VARS.filter(function(v){return v.nome.trim() && v.qtd>0;});
   if (!variacoesValidas.length) { toast("Adicione ao menos uma variacao com nome e quantidade","ter"); return; }
+  var lojaDestino = (document.getElementById("rec-loja")||{}).value||"";
+  if (!lojaDestino) { toast("Escolha a loja de destino","ter"); return; }
   var btn = document.getElementById("btn-salvar-recebimento");
   if (btn) { btn.innerHTML="<span class='spinner'></span>Registrando..."; btn.disabled=true; }
   try {
@@ -4278,19 +4576,22 @@ async function salvarRecebimento() {
       var codigoVar = (baseNome.substring(0,4)+"-"+v.nome).toUpperCase().replace(/[^A-Z0-9-]/g,"").substring(0,20);
       var rp = await sb.from("produtos").insert({
         nome: baseNome+" - "+v.nome, categoria: baseCategoria, subcategoria: baseSubcategoria, preco_credito: basePreco, preco_custo: v.custo||baseCusto,
-        estoque_atual: v.qtd, estoque_minimo: 3, classificacao_abc:"B", ativo:true,
+        estoque_atual: 0, estoque_minimo: 3, classificacao_abc:"B", ativo:true,
         e_base:false, produto_base_id: baseId, variacao_nome: v.nome, variacao_tipo: v.tipo||"tamanho",
         codigo: codigoVar, foto_url: baseFoto
       }).select().single();
       if (rp.error) throw new Error(rp.error.message);
+      var ei = await sb.from("estoque_lojas").upsert({produto_id: rp.data.id, loja_id: lojaDestino, quantidade: v.qtd}, {onConflict:"produto_id,loja_id"});
+      if (ei.error) throw new Error(ei.error.message);
       var re = await sb.from("entradas_estoque").insert({
-        produto_id: rp.data.id, quantidade: v.qtd, custo_unitario: v.custo||baseCusto,
+        produto_id: rp.data.id, loja_id: lojaDestino, quantidade: v.qtd, custo_unitario: v.custo||baseCusto,
         fornecedor: fornecedor||null, nota_fiscal: nf||null, registrado_por: CURRENT_FUNC.id
       });
       if (re.error) console.error("entrada_estoque:",re.error.message);
     }
     toast("Recebimento registrado! "+variacoesValidas.length+" variação(ões).","tok");
     await carregarProdutosDB();
+    await carregarEstoqueLojaAtiva();
     go("s-estoque");
   } catch(e) {
     toast("Erro: "+e.message.substring(0,70),"ter");
