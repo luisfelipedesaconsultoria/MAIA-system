@@ -1742,6 +1742,7 @@ function go(id) {
   if (!el) return;
   el.classList.add("on","sIn");
   PREV = id;
+  resetViewportZoom();
   var bi = document.getElementById("bbar-inner");
   var bn = document.getElementById("bbar-notas");
   var bs = document.getElementById("bsingle-home");
@@ -1757,8 +1758,11 @@ function go(id) {
   if (id==="s-estoque-geral") { var egEl=document.getElementById("eg-search"); if(egEl) egEl.value=""; carregarEstoqueGeral(); }
   var comBbar = ["s-estoque","s-estoque-geral","s-minhas-vendas","s-token","s-ao-vivo","s-perfil","s-notas","s-fechamentos","s-receber"];
   if (id==="s-vender" || id==="s-success") {
-    if (ROLE==="v"||ROLE==="d") { if (bs) bs.classList.add("on"); }
-    else { if (bi) bi.classList.add("on"); }
+    // no Vender, a barra de navegacao fixa so aparece com o carrinho vazio —
+    // do contrario ela cobre a barra de checkout (stbar) do proprio carrinho
+    var mostrarNavFixa = (id!=="s-vender") || cart.length===0;
+    if (ROLE==="v"||ROLE==="d") { if (bs) bs.classList.toggle("on", mostrarNavFixa); }
+    else { if (bi) bi.classList.toggle("on", mostrarNavFixa); }
   }
   if (comBbar.indexOf(id) >= 0) { if (bi) bi.classList.add("on"); }
   if (id==="s-notas") { if (bn) bn.classList.add("on"); if (bi) bi.classList.remove("on"); }
@@ -2961,7 +2965,7 @@ function chkDisc() {
 async function chkToken() {
   var v = (document.getElementById("tok-inp").value||"").trim();
   if (v.length!==4) return;
-  var r = await sb.from("tokens_autorizacao").select("*").eq("codigo",v).eq("usado",false).gt("expira_em", new Date().toISOString()).maybeSingle();
+  var r = await sb.from("tokens_autorizacao").select("*").eq("codigo",v).eq("status","ativo").gt("expira_em", new Date().toISOString()).maybeSingle();
   if (r.error || !r.data) { toast("Token invalido ou expirado","ter"); document.getElementById("tok-inp").value=""; return; }
   toast("Token valido!","tok");
 }
@@ -3034,6 +3038,13 @@ function updSt() {
   } else {
     stbar.style.display = "none";
     if (ind) ind.style.display = "none";
+  }
+  // a barra de navegacao fixa cobre a stbar quando ambas ficam "on" — mantem so uma visivel
+  var svEl = document.getElementById("s-vender");
+  if (svEl && svEl.classList.contains("on")) {
+    var bi = document.getElementById("bbar-inner"), bs = document.getElementById("bsingle-home");
+    if (ROLE==="v"||ROLE==="d") { if (bs) bs.classList.toggle("on", n===0); }
+    else { if (bi) bi.classList.toggle("on", n===0); }
   }
 }
 
@@ -3359,7 +3370,7 @@ async function genToken() {
   var expiraEm = new Date(Date.now()+5*60*1000).toISOString();
   try {
     var r = await sb.from("tokens_autorizacao").insert({
-      codigo: codigo, criado_por: CURRENT_FUNC.id, expira_em: expiraEm, usado: false
+      codigo: codigo, gerado_por: CURRENT_FUNC.id, expira_em: expiraEm
     }).select().single();
     if (r.error) throw new Error(r.error.message);
     currentToken = r.data;
@@ -3387,7 +3398,7 @@ function iniciarCountdownToken(segundos) {
 function clearToken() {
   if (tokTimer) clearInterval(tokTimer);
   s("tok-code","----"); s("tok-timer","Digite seu PIN para gerar"); s("ger-tok-status","Nenhum");
-  if (currentToken) { sb.from("tokens_autorizacao").update({usado:true}).eq("id",currentToken.id).then(function(){}); currentToken=null; }
+  if (currentToken) { sb.from("tokens_autorizacao").update({status:"expirado"}).eq("id",currentToken.id).then(function(){}); currentToken=null; }
   toast("Token invalidado","tok");
 }
 
@@ -4071,8 +4082,28 @@ function swTab(t) {
 
 // ─── UTILS ───────────────────────────────────────────────────
 function s(id, val) { var e = document.getElementById(id); if (e) e.textContent = val; }
+// Alguns navegadores mobile (Safari/iOS em especial) podem "travar" com zoom
+// aplicado apos focar/desfocar campos (ex: desconto + token) mesmo com
+// user-scalable=no. Forcar uma pequena mudanca no viewport e desfazer logo
+// em seguida obriga o navegador a reaplicar escala 1 e destravar a tela.
+// Guarda o conteudo original uma unica vez: chamadas sobrepostas nao podem
+// usar um valor ja alterado como base, senao o sufixo vai se acumulando.
+var VIEWPORT_CONTEUDO_ORIGINAL = null;
+var viewportResetTimer = null;
+function resetViewportZoom() {
+  var vp = document.querySelector('meta[name="viewport"]');
+  if (!vp) return;
+  if (VIEWPORT_CONTEUDO_ORIGINAL === null) VIEWPORT_CONTEUDO_ORIGINAL = vp.getAttribute("content");
+  vp.setAttribute("content", VIEWPORT_CONTEUDO_ORIGINAL + ",maximum-scale=1.0001");
+  if (viewportResetTimer) clearTimeout(viewportResetTimer);
+  viewportResetTimer = setTimeout(function(){ vp.setAttribute("content", VIEWPORT_CONTEUDO_ORIGINAL); }, 60);
+}
+document.addEventListener("focusout", function(e){
+  var t = e.target;
+  if (t && (t.tagName==="INPUT"||t.tagName==="SELECT"||t.tagName==="TEXTAREA")) setTimeout(resetViewportZoom, 80);
+});
 function openOv(id) { var e = document.getElementById(id); if (e) e.classList.add("on"); if(id==="ov-add-regra"){} }
-function closeOv(id) { var e = document.getElementById(id); if (e) e.classList.remove("on"); }
+function closeOv(id) { var e = document.getElementById(id); if (e) e.classList.remove("on"); resetViewportZoom(); }
 function toast(msg, cls) {
   var t = document.getElementById("tst");
   if (toastT) clearTimeout(toastT);
