@@ -416,6 +416,7 @@ input,select,textarea{font-size:16px!important;-webkit-appearance:none;font-fami
     </div>
     <!-- Card do produto -->
     <div class="prodcard" id="prodcard" style="margin-bottom:8px;">
+      <img id="pr-foto" style="display:none;width:100%;height:170px;object-fit:cover;border-radius:14px;margin-bottom:10px;">
       <div style="display:flex;gap:11px;align-items:center;margin-bottom:12px;">
         <div style="width:50px;height:50px;border-radius:11px;background:linear-gradient(135deg,#F06E8C12,#2BBFB312);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;" id="pr-ic">👗</div>
         <div style="flex:1;">
@@ -1147,6 +1148,7 @@ input,select,textarea{font-size:16px!important;-webkit-appearance:none;font-fami
 <div class="ov" id="ov-est">
   <div class="ob">
     <div class="oh"></div>
+    <img id="est-foto" style="display:none;width:100%;height:200px;object-fit:cover;border-radius:14px;margin-bottom:8px;">
     <div style="font-size:36px;text-align:center;margin-bottom:6px;" id="est-ic">👗</div>
     <div style="font-size:16px;font-weight:800;text-align:center;" id="est-nm">-</div>
     <div style="font-size:10px;color:var(--mu);text-align:center;margin:3px 0 14px;" id="est-sk">-</div>
@@ -2065,7 +2067,7 @@ async function carregarProdutosDB() {
     PRODS_CACHE.forEach(function(p) {
       if (p.e_base) return; // produto-base nao aparece para venda direta
       var k = (p.codigo||p.id.substring(0,8)).toUpperCase().replace(/[^A-Z0-9]/g,"");
-      PD[k] = {nm:p.nome,sk:p.codigo||k,pr:p.preco_credito,st:p.estoque_atual,stl:ESTOQUE_LOJA_ATIVA[p.id]||0,ic:catIcon(p.categoria),abc:p.classificacao_abc||"B",id:p.id,custo:p.preco_custo||0,cat:p.categoria};
+      PD[k] = {nm:p.nome,sk:p.codigo||k,pr:p.preco_credito,st:p.estoque_atual,stl:ESTOQUE_LOJA_ATIVA[p.id]||0,ic:catIcon(p.categoria),abc:p.classificacao_abc||"B",id:p.id,custo:p.preco_custo||0,cat:p.categoria,foto:p.foto_url||null};
     });
     renderEstoque(PRODS_CACHE);
     if (ROLE==="a") renderProdAdmin(PRODS_CACHE);
@@ -2391,6 +2393,9 @@ function openEstModal(prodId) {
   var p = PRODS_CACHE.find(function(x){return x.id===prodId;}); if(!p) return;
   PROD_EDIT_ID = prodId;
   var pixP = pixPrice(p.preco_credito,p.categoria,p.id);
+  var estFoto = document.getElementById("est-foto"), estIc = document.getElementById("est-ic");
+  if (p.foto_url) { estFoto.src=p.foto_url; estFoto.style.display="block"; if(estIc) estIc.style.display="none"; }
+  else { estFoto.style.display="none"; estFoto.src=""; if(estIc) estIc.style.display="block"; }
   s("est-ic",catIcon(p.categoria)); s("est-nm",p.nome); s("est-sk",p.codigo||"-");
   s("est-qt",p.estoque_atual+" unidades (total)"); s("est-cu","R$ "+(p.preco_custo||0).toFixed(2).replace(".",","));
   s("est-pr","R$ "+p.preco_credito.toFixed(2).replace(".",","));
@@ -2925,6 +2930,9 @@ function showProd(key) {
   qty = 1;
   s("qnum","1");
   s("pr-ic",p.ic); s("pr-nm",p.nm); s("pr-sk",p.sk);
+  var prFoto = document.getElementById("pr-foto");
+  if (p.foto) { prFoto.src=p.foto; prFoto.style.display="block"; }
+  else { prFoto.style.display="none"; prFoto.src=""; }
   var stLoja = p.stl||0;
   s("pr-st", stLoja>0 ? stLoja+" em estoque ("+(LOJA_ATIVA_NOME||"loja ativa")+") · "+p.st+" no total" : "SEM ESTOQUE em "+(LOJA_ATIVA_NOME||"loja ativa"));
   document.getElementById("pr-st").style.color = stLoja>0 ? "var(--tl)" : "var(--rd)";
@@ -4359,7 +4367,7 @@ async function autorizarAbertura() {
   var btn = document.getElementById("btn-ab");
   if (btn) { btn.innerHTML="<span class='spinner'></span>Autorizando..."; btn.disabled=true; }
   try {
-    var r = await sb.from("caixas").upsert({vendedora_id:vendId,data:hoje,status:"aberto",aberto_em:new Date().toISOString(),autorizado_por:CURRENT_FUNC.id},{onConflict:"vendedora_id,data"});
+    var r = await sb.from("caixas").upsert({vendedora_id:vendId,data:hoje,status:"aberto",aberto_em:new Date().toISOString(),aberto_por:CURRENT_FUNC.id},{onConflict:"vendedora_id,data"});
     if (r.error) throw new Error(r.error.message);
     toast("Caixa autorizado!","tok");
     closeOv("ov-abertura");
@@ -4428,7 +4436,7 @@ async function autorizarFechamento() {
   var caixaId = document.getElementById("conf-caixa-id").value;
   var obs = (document.getElementById("conf-obs-ger").value||"").trim();
   try {
-    var r = await sb.from("caixas").update({status:"fechado",fechado_em:new Date().toISOString(),observacao_gerente:obs||null,conferido_por:CURRENT_FUNC.id}).eq("id",caixaId);
+    var r = await sb.from("caixas").update({status:"fechado",fechado_em:new Date().toISOString(),observacao_gerente:obs||null,fechado_por:CURRENT_FUNC.id}).eq("id",caixaId);
     if (r.error) throw new Error(r.error.message);
     toast("Fechamento autorizado!","tok");
     closeOv("ov-conf-fech");
