@@ -2,6 +2,8 @@ name: Ping Supabase (evitar pausa por inatividade)
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
   schedule:
     - cron: '0 8 * * 1,4'
 
@@ -9,9 +11,17 @@ jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping Supabase REST API
+      - name: Consultar tabela real no Supabase (registra atividade de verdade)
         run: |
-          curl -s -o /dev/null -w "%{http_code}" \
-            "https://crflnclgpnjqlsyxlznx.supabase.co/rest/v1/" \
-            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
-            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}"
+          ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNyZmxuY2xncG5qcWxzeXhsem54Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE1OTk1MDQsImV4cCI6MjA5NzE3NTUwNH0.f9XOEpaA8WXa2kRsTXnvKEA78z6Z4sXdNmGptBnMq6o"
+          HTTP_STATUS=$(curl -s -o /tmp/resp.json -w "%{http_code}" \
+            "https://crflnclgpnjqlsyxlznx.supabase.co/rest/v1/lojas?select=id&limit=1" \
+            -H "apikey: $ANON_KEY" \
+            -H "Authorization: Bearer $ANON_KEY")
+          echo "HTTP status: $HTTP_STATUS"
+          cat /tmp/resp.json
+          echo
+          if [ "$HTTP_STATUS" -lt 200 ] || [ "$HTTP_STATUS" -ge 300 ]; then
+            echo "::error::Ping ao Supabase falhou (status $HTTP_STATUS) — o projeto pode ficar pausado por inatividade!"
+            exit 1
+          fi
